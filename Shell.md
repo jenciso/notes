@@ -12,6 +12,10 @@ Multiple processes
 ```
 sudo strace -f -tt -o /tmp/php.trace -s1024 -p `pidof php5-fpm | tr ' ' ','`
 ```
+Alternative:
+```
+strace -tt -s2048 $(pidof httpd |sed 's/\([0-9]*\)/\-p \1/g')
+```
 
 ## Single boot in Centos 7
 Step 1: On the boot, press any key to enter in grub2 menu
@@ -32,4 +36,21 @@ chroot /sysroot
 ## Cron.daily doesn’t run in Centos 7
 ```
 yum -y install cronie-noanacron
+```
+
+## Kill processes orphaned
+```
+kill -9 `pidof -x 'ansible-playbook'`
+```
+
+## Verify permissions file with stat
+
+```
+[root@Niflheim tmp]# ls -alF .
+total 1632
+drwxrwxrwt 15 root root    4096 Apr  7 04:24 ./
+drwxr-xr-x 28 root root    4096 Apr  2 21:02 ../
+[root@Niflheim tmp]# stat -c '%A %a %n' .
+drwxrwxrwt 1777 .
+
 ```

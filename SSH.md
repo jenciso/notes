@@ -23,3 +23,9 @@ Step 2: Execute
 ssh -R 9000:localhost:3000 user@example.com
 ```
 
+## Howto change passphare in ssh-keys
+```
+cd ~/.ssh
+ssh-keygen -f id_rsa -p
+```
+
