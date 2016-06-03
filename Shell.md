@@ -54,3 +54,22 @@ drwxr-xr-x 28 root root    4096 Apr  2 21:02 ../
 drwxrwxrwt 1777 .
 
 ```
+
+## Runnig Redis Monitor
+
+```
+redis-cli monitor
+```
+or 
+```
+telnet localhost 6379
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+MONITOR
++OK
+```
+Alternative way, via ngrep
+```
+ngrep -d any -pqt -W single '' port 6379
+```
