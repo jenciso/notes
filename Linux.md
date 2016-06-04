@@ -43,3 +43,20 @@ apt-cache showpkg ansible
 ``` 
 
 
+## Using ngrep against tcpdump
+
+TCP 80
+```
+ngrep -d any -pqt -W single '' port 80
+```
+
+TCP 10050 (ZABBIX)
+```
+ngrep -d any -pqt -W single '' port 10050
+``` 
+
+TCP 10051 (ZABBIX-ACTIVE)
+```
+ngrep -d any -pqt -W single '' port 10051
+```
+
