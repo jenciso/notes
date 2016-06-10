@@ -12,9 +12,13 @@ Multiple processes
 ```
 sudo strace -f -tt -o /tmp/php.trace -s1024 -p `pidof php5-fpm | tr ' ' ','`
 ```
-Alternative:
+Alternative 1:
 ```
 strace -tt -s2048 $(pidof httpd |sed 's/\([0-9]*\)/\-p \1/g')
+```
+Alternative 2:
+```
+ps auxw | grep sbin/apache | awk '{print"-p " $2}' | xargs strace
 ```
 
 ## Single boot in Centos 7
