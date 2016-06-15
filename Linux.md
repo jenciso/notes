@@ -60,3 +60,36 @@ TCP 10051 (ZABBIX-ACTIVE)
 ngrep -d any -pqt -W single '' port 10051
 ```
 
+## Mount windows filesystem using cifs
+Step 1: Pre-requisites
+```
+yum -y install cifs-utils
+```
+Step 2: Mount
+```
+mount -t cifs -o username=<share user>,password=<share password> //WIN_PC_IP/<share name> /mnt
+or
+mount -t cifs -o username=<share user>,password=<share password>,domain=example.com //WIN_PC_IP/<share name> /mnt
+```
+By default windows mount with the full permission 777, to change:
+```
+mount -t cifs -o username=<share user>,password=<share password>,dir_mode=0755,file_mode=0755 //WIN_PC_IP/<share name> /mnt
+```
+Step 3: Mount via /etc/fstab
+```
+//WIN_PC_IP/<share name>    /<mntpoint>   cifs  _netdev,username=<share user>,password=<share password>,dir_mode=0755,file_mode=0755,uid=500,gid=500 0 0
+```
+
+## Backup using dump
+Example 1: 
+```
+dump u0f /mnt/Server216/raiz_216.dump /
+```
+Example 2:
+```
+rsh -n otherbox /sbin/dump u0f - /usr | dd of=/dev/nrsa0 obs=32k
+```
+Example 3:
+```
+dump -0 -b 32 -u -f otherbox:/dev/nrsa0 /usr
+```
