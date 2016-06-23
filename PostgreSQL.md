@@ -40,3 +40,9 @@ postgres=# \c database_name
 postgres=# \dt *.
 
 
+## Import a dump file
+```
+psql databasename < data_base_dump
+```
+
+
