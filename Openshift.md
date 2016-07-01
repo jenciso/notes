@@ -9,13 +9,13 @@ This tutorial assumes that you are using Centos 7.2 in all nodes.
 ### Pre-requisites
 
 * Step 1: Install packages
-```
+```bash
 yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion
 yum -y update
 ```
 
 * Step 2: Reboot 
-```
+```bash
 systemctl reboot
 ```
 
@@ -25,7 +25,7 @@ yum -y install epel-release
 ```
 
 * Step 4: Disable the EPEL repository globally
-```
+```bash
 sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
 ```
 
@@ -35,14 +35,14 @@ yum -y --enablerepo=epel install ansible pyOpenSSL
 ```
 
 * Step 6: Clone Ansible
-```
+```bash
 cd ~
 git clone https://github.com/openshift/openshift-ansible
 cd openshift-ansible
 ```
 
 * Step 7: Install Docker
-```
+```bash
 yum -y install docker
 ```
 
@@ -66,7 +66,7 @@ second_disk = './second_disk_file.vdi'
 ```
 
 * Step 10: Assuming the name for new disk in master-node /dev/sdb. Configure your docker storage
-```
+```bash
 [root@tst-osf-master01-poa ~]# cat <<EOF > /etc/sysconfig/docker-storage-setup
 > DEVS=/dev/sdb
 > VG=docker-vg
@@ -75,17 +75,15 @@ second_disk = './second_disk_file.vdi'
 ```
 
 * Step 11: Run docker-storage-setup and verify config
-```
+```bash
 [root@tst-osf-master01-poa ~]# docker-storage-setup 
-``` 
-```
 [root@tst-osf-master01-poa ~]# cat /etc/sysconfig/docker-storage
 DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
 [root@tst-osf-master01-poa ~]#
 ```
 
 * Step 12: Verify if docker is active and start it
-```
+```bash
 [root@tst-osf-master01-poa ~]# systemctl is-active docker
 unknown
 [root@tst-osf-master01-poa ~]# systemctl enable docker
@@ -97,11 +95,10 @@ active
 ``` 
 
 * Step 13: Limit the container logs, modify the OPTIONS line in docker config file
-```
+```bash
 [root@tst-osf-master01-poa ~]# vi /etc/sysconfig/docker 
 [root@tst-osf-master01-poa ~]# cat  /etc/sysconfig/docker | grep OPTIONS
 OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16 --log-opt max-size=1M --log-opt max-file=3'
 [root@tst-osf-master01-poa ~]# systemctl restart docker
 ```
 
-* Step 14: 
