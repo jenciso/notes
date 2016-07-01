@@ -1,3 +1,23 @@
+## Setup hostname
+
+```
+config.vm.hostname = "hostname.domain.com"
+```
+
+## Change disk controller
+```
+Vagrant.configure("2") do |config|
+
+  # ...
+
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["storagectl", :id, "--name", "SATA Controller", "--remove"]
+    v.customize ["storagectl", :id, "--name", "IDE Controller", "--add", ...]
+  end
+
+end
+```
+
 ## Add Second disk
 
 Step 1: Install the vagrant-persistent-storage
