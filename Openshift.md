@@ -1,10 +1,13 @@
 # OpenShift Tutorial
 
-## Installing Openshift Origin - Node Master
+## Installing Openshift Origin
 
 ### Introduction
 
 This tutorial assumes that you are using Centos 7.2 in all nodes.
+Machines:
+- 1 Master
+- 2 Nodes
 
 ### Pre-requisites
 
@@ -145,6 +148,23 @@ OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16 --log-opt max-size=
 
 * Step 14: Restart Docker
 ```bash
-[root@tst-osf-master01-poa ~]# systemctl restart docker
+systemctl restart docker
 ```
+
+* Step 15: Running Installer
+```bash 
+ansible-playbook openshift-ansible/playbooks/byo/config.yml
+```
+
+* Step 16: Check Instalation
+Running in the master, the following command:
+```
+[root@tst-osf-master01-poa ~]# oc get nodes
+NAME                                STATUS                     AGE
+tst-osf-master01-poa.iplanet.work   Ready,SchedulingDisabled   5m
+tst-osf-node01-poa.iplanet.work     Ready                      5m
+tst-osf-node02-poa.iplanet.work     Ready                      5m
+[root@tst-osf-master01-poa ~]#
+```
+
 
