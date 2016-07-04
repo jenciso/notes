@@ -123,7 +123,7 @@ INFO: Device node /dev/sdb1 exists.
 [root@tst-osf-node01-poa ~]# 
 ```
 Then the file /etc/sysconfig/docker-storage will show you
- 
+```  
 [root@tst-osf-master01-poa ~]# cat /etc/sysconfig/docker-storage
 DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
 [root@tst-osf-master01-poa ~]#
