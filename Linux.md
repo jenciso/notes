@@ -113,3 +113,11 @@ or
 pstree
 ```
 
+## Kill subprocess in daemontools
+Add this line in your config
+
+```
+stopasgroup = true
+```
+
+
