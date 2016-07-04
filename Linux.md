@@ -104,3 +104,12 @@ Step 2: Run command and change keyboard map
 system-config-keyboard
 ```
 
+## Show processes and threads  
+```
+ps auxf
+```
+or 
+```
+pstree
+```
+
