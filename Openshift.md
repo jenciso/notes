@@ -138,11 +138,13 @@ active
 [root@tst-osf-master01-poa ~]# 
 ``` 
 
-* Step 13: Limit the container logs, modify the OPTIONS line in docker config file
+* Step 13: Limit the container logs, modify the OPTIONS line in docker config file: /etc/sysconfig/docker
 ```bash
-[root@tst-osf-master01-poa ~]# vi /etc/sysconfig/docker 
-[root@tst-osf-master01-poa ~]# cat  /etc/sysconfig/docker | grep OPTIONS
 OPTIONS='--selinux-enabled --insecure-registry 172.30.0.0/16 --log-opt max-size=1M --log-opt max-file=3'
+```
+
+* Step 14: Restart Docker
+```bash
 [root@tst-osf-master01-poa ~]# systemctl restart docker
 ```
 
