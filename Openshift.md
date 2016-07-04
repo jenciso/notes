@@ -67,16 +67,60 @@ second_disk = './second_disk_file.vdi'
 
 * Step 10: Assuming the name for new disk in master-node /dev/sdb. Configure your docker storage
 ```bash
-[root@tst-osf-master01-poa ~]# cat <<EOF > /etc/sysconfig/docker-storage-setup
-> DEVS=/dev/sdb
-> VG=docker-vg
-> EOF
-[root@tst-osf-master01-poa ~]# 
+cat <<EOF > /etc/sysconfig/docker-storage-setup
+DEVS=/dev/sdb
+VG=docker-vg
+EOF
 ```
 
 * Step 11: Run docker-storage-setup and verify config
 ```bash
-[root@tst-osf-master01-poa ~]# docker-storage-setup 
+docker-storage-setup 
+```
+Ex:
+```
+[root@tst-osf-node01-poa ~]# docker-storage-setup
+Checking that no-one is using this disk right now ...
+OK
+
+Disk /dev/sdb: 26108 cylinders, 255 heads, 63 sectors/track
+sfdisk:  /dev/sdb: unrecognized partition table type
+
+Old situation:
+sfdisk: No partitions found
+
+New situation:
+Units: sectors of 512 bytes, counting from 0
+
+   Device Boot    Start       End   #sectors  Id  System
+/dev/sdb1          2048 419430399  419428352  8e  Linux LVM
+/dev/sdb2             0         -          0   0  Empty
+/dev/sdb3             0         -          0   0  Empty
+/dev/sdb4             0         -          0   0  Empty
+Warning: partition 1 does not end at a cylinder boundary
+Warning: no primary partition is marked bootable (active)
+This does not matter for LILO, but the DOS MBR will not boot this disk.
+Successfully wrote the new partition table
+
+Re-reading the partition table ...
+
+If you created or changed a DOS partition, /dev/foo7, say, then use dd(1)
+to zero the first 512 bytes:  dd if=/dev/zero of=/dev/foo7 bs=512 count=1
+(See fdisk(8).)
+INFO: Device node /dev/sdb1 exists.
+  Physical volume "/dev/sdb1" successfully created
+  Volume group "docker-vg" successfully created
+  Rounding up size to full physical extent 208.00 MiB
+  Logical volume "docker-poolmeta" created.
+  Logical volume "docker-pool" created.
+  WARNING: Converting logical volume docker-vg/docker-pool and docker-vg/docker-poolmeta to pool's data and metadata volumes.
+  THIS WILL DESTROY CONTENT OF LOGICAL VOLUME (filesystem etc.)
+  Converted docker-vg/docker-pool to thin pool.
+  Logical volume "docker-pool" changed.
+[root@tst-osf-node01-poa ~]# 
+```
+Then the file /etc/sysconfig/docker-storage will show you
+ 
 [root@tst-osf-master01-poa ~]# cat /etc/sysconfig/docker-storage
 DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
 [root@tst-osf-master01-poa ~]#
