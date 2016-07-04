@@ -93,3 +93,14 @@ Example 3:
 ```
 dump -0 -b 32 -u -f otherbox:/dev/nrsa0 /usr
 ```
+
+## Change Keyboard map in CentOS 7
+Step 1: Download package 
+```
+yum -y install system-config-keyboard
+```
+Step 2: Run command and change keyboard map
+```
+system-config-keyboard
+```
+
