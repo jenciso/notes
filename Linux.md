@@ -103,7 +103,12 @@ Step 2: Run command and change keyboard map
 ```
 system-config-keyboard
 ```
-
+Manually:
+```
+[root@localhost ~]# system-config-keyboard
+Loading /lib/kbd/keymaps/legacy/i386/qwerty/br-abnt2.map.gz
+[root@localhost ~]#
+```
 ## Show processes and threads  
 ```
 ps auxf
@@ -119,5 +124,6 @@ Add this line in your config
 ```
 stopasgroup = true
 ```
+https://coderwall.com/p/4tcw7w/setting-supervisor-to-really-stop-django-runserver
 
 
