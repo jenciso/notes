@@ -126,4 +126,8 @@ stopasgroup = true
 ```
 https://coderwall.com/p/4tcw7w/setting-supervisor-to-really-stop-django-runserver
 
-
+## Installing Unattended Upgrades
+```
+sudo unattended-upgrade
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+```
