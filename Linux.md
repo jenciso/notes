@@ -126,8 +126,21 @@ stopasgroup = true
 ```
 https://coderwall.com/p/4tcw7w/setting-supervisor-to-really-stop-django-runserver
 
-## Installing Unattended Upgrades
+## Installing Unattended Upgrades - Ubuntu
 ```
 sudo unattended-upgrade
 sudo dpkg-reconfigure --priority=low unattended-upgrades
 ```
+
+## Change localtime - Centos 7
+
+List all available timezones
+```
+timedatectl list-timezones
+```
+
+Set for the correct timezone
+```
+timedatectl set-timezone America/Sao_Paulo
+```
+
