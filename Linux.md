@@ -158,3 +158,10 @@ Step 2: Re-generate a new grub using the new config file
 grub2-mkconfig -o /boot/grub2/grug.cfg
 ```
 
+Step 3: Rename the "enp0s3" network file to "eth0", and modify its content
+```
+mv /etc/sysconfig/network-scripts/ifcfg-enps03  /etc/sysconfig/network-scripts/ifcfg-eth0
+sed -i -e "s/enp0s3/eth0/" /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+
+Step 4: Reboot
