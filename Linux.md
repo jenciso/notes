@@ -147,6 +147,7 @@ timedatectl set-timezone America/Sao_Paulo
 ## Change Network Interface Name from enp* to eth*
 
 Step 1: Edit */etc/sysconfig/grub* config file and append the follow line: **net.ifnames=0 biosdevname=0**
+
 Example:
 ```
 GRUB_CMDLINE_LINUX="rd.lvm.lv=centos/swap vconsole.font=latarcyrheb-sun16 rd.lvm.lv=centos/root crashkernel=auto  vconsole.keymap=us rhgb quiet net.ifnames=0 biosdevname=0"
