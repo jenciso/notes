@@ -86,3 +86,10 @@ Using regexp
 find ./ ! -regex  '.*\(deb\|vmdk\)$'
 ```
 http://unix.stackexchange.com/questions/50612/how-to-combine-2-name-conditions-in-find
+
+Find by time
+
+```
+find /home/you -iname "*.txt" -mtime -60 -print
+```
+http://www.cyberciti.biz/faq/howto-finding-files-by-date/
