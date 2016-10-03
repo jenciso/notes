@@ -77,3 +77,9 @@ Alternative way, via ngrep
 ```
 ngrep -d any -pqt -W single '' port 6379
 ```
+
+## Find
+
+```
+find ./ ! -regex  '.*\(deb\|vmdk\)$'
+```
