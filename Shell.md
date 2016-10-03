@@ -80,6 +80,9 @@ ngrep -d any -pqt -W single '' port 6379
 
 ## Find
 
+Using regexp
+
 ```
 find ./ ! -regex  '.*\(deb\|vmdk\)$'
 ```
+http://unix.stackexchange.com/questions/50612/how-to-combine-2-name-conditions-in-find
