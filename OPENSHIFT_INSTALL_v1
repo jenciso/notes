@@ -1,0 +1,361 @@
+# Manual de instalação do OpenShift
+
+## Intro
+
+Esta seção apresenta em detalhes o passo a passo do processo de instalação do OpenShift.
+
+A configuração básica do servidor, instalação e configuração do docker, é feita de maneira manual.
+
+A instalação dos componentes do OpenShift é feita com o ansible utilizando o playbook fornecido pelo OS.
+
+## Procedimento
+
+1. Verificar se o SELinux está ativo (deve ser feito em todos os servidores).
+```bash
+[root@prd-openshift-master01-poa ~]# cat /etc/selinux/config
+SELINUX=enforcing 
+SELINUXTYPE=targeted
+```
+
+2. Atualizar o sistema operacional e instalar pacotes necessários para o OpenShift (deve ser feito em todos os servidores).
+```bash
+[root@prd-openshift-master01-poa ~]# yum -y update
+[root@prd-openshift-master01-poa ~]# yum -y install wget git net-tools \
+    bind-utils iptables-services bridge-utils bash-completion
+```
+
+3. Instalar o Docker (deve ser feito em todos os servidores).
+  * **Observação**: O volume group vg-docker deve estar criado em todos os servidores com no mínimo 15 GB de espaço livre.
+
+     ```
+     [root@prd-openshift-master01-poa ~]# yum install docker
+     [root@prd-openshift-master01-poa ~]# systemctl stop docker
+     [root@prd-openshift-master01-poa ~]# rm -rf /var/lib/docker/*
+     [root@prd-openshift-master01-poa ~]# vi /etc/sysconfig/docker-storage-setup
+     VG=vg-docker
+     [root@prd-openshift-master01-poa ~]# docker-storage-setup
+     [root@prd-openshift-master01-poa ~]# cat /etc/sysconfig/docker-storage
+     DOCKER_STORAGE_OPTIONS=--storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool
+     [root@prd-openshift-master01-poa ~]# systemctl enable docker
+     [root@prd-openshift-master01-poa ~]# systemctl start docker
+     ```
+
+4. Configurar acesso remoto por SSH para que o Ansible possa acessar os servidores.
+  * **Observação**: Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+
+      ```markdown
+      [root@prd-openshift-master01-poa ~]# ssh-keygen
+      [root@prd-openshift-master01-poa ~]# for host in prd-openshift-lb01.rbs.com.br \
+      prd-openshift-master01.rbs.com.br \
+      prd-openshift-master02.rbs.com.br \
+      prd-openshift-master03.rbs.com.br \
+      prd-openshift-etcd01.rbs.com.br \
+      prd-openshift-etcd02.rbs.com.br \
+      prd-openshift-etcd03.rbs.com.br \
+      prd-openshift-node01.rbs.com.br \
+      prd-openshift-node02.rbs.com.br \
+      prd-openshift-node03.rbs.com.br; \
+      do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
+      done
+      ```
+
+5. Instalar o Ansible.
+   > Observações:
+   * Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+   * Ansible é a ferramenta de automatização utilizada por padrão pelo OpenShift para o processo de instalação.
+   * Em servidores CentOS o repositório EPEL deve ser instalado para que seja baixada a versão mais atual do Ansible.
+            
+          ```markdown
+          [root@prd-openshift-master01-poa ~]# yum -y epel-release
+          [root@prd-openshift-master01-poa ~]# sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo 
+          [root@prd-openshift-master01-poa ~]# yum -y --enablerepo=epel install ansible pyOpenSSL
+          ```
+
+6. Clonar o repositório oficial do OpenShift no GitHub.
+   > Observações:
+   * Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+
+          ```markdown
+          [root@prd-openshift-master01-poa ~]# cd /opt 
+          [root@prd-openshift-master01-poa ~]# git clone https://github.com/openshift/openshift-ansible 
+          [root@prd-openshift-master01-poa ~]# cd openshift-ansible
+          ```
+
+7. Configurar o arquivo de instalação do Ansible.
+   > Observações:
+   - Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+
+          ```markdown
+          [root@prd-openshift-master01-poa ~] # vi /etc/ansible/hosts
+          ################################################################################
+          [OSEv3:children]
+          masters
+          nodes
+          etcd
+          lb
+          
+          [OSEv3:vars]
+          # Usuario a ser utilizado pelo ansible
+          ansible_ssh_user=root
+          # Indica que o ansible deve utilizar sudo
+          #ansible_sudo=true
+          # O deploy a ser feito e' do tipo Origin e nao Enterprise (RHEL)
+          deployment_type=origin
+          # Multitenant isola cada projeto em sua propria VXLAN
+          os_sdn_network_plugin_name=redhat/openshift-ovs-multitenant
+          # Range de IPs a ser utilizado pelos containers
+          # Este range deve ser exclusivo para o OpenShift e nao pode conflitar
+          # com outros ranges utilizados no ambiente do OpenShift (servidores
+          # fisicos de KVM e servidores de virtualizacao)
+          # Este range de IPs nao e' roteado para fora do OpenShift
+          osm_cluster_network_cidr=172.16.0.0/16
+          # Configuracoes para o cluster dos masters e load balance
+          openshift_master_cluster_method=native
+          openshift_master_cluster_hostname=openshift.rbs.com.br
+          openshift_master_cluster_public_hostname=openshift.rbs.com.br
+           
+          # Hosts do tipo master
+          [masters]
+          prd-openshift-master01.rbs.com.br
+          prd-openshift-master02.rbs.com.br
+          prd-openshift-master03.rbs.com.br
+          
+          # Hosts do tipo etcd - banco de dados dos masters
+          [etcd]
+          prd-openshift-etcd01.rbs.com.br
+          prd-openshift-etcd02.rbs.com.br
+          prd-openshift-etcd03.rbs.com.br
+          
+          # Host de load balance
+          [lb]
+          openshift.rbs.com.br
+          
+          # Nodes que irao executar containers
+          # - Region = infra -> nodes que irao receber os containers de router
+          # - Region = prd -> nodes que irao executar containers com o label de producao
+          # - Region = dev -> nodes que irao executar containers com o label de desenvolvimento e homologacao
+          [nodes]
+          prd-openshift-master0[1:3].rbs.com.br openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_schedulable=true
+          prd-openshift-node01.rbs.com.br       openshift_node_labels="{'region': 'prd', 'zone': 'default'}"
+          prd-openshift-node02.rbs.com.br       openshift_node_labels="{'region': 'prd', 'zone': 'default'}"
+          prd-openshift-node03.rbs.com.br       openshift_node_labels="{'region': 'dev', 'zone': 'default'}"
+          ################################################################################
+          ```
+
+8. Executar instalação do OpenShift.
+   > Observações:
+   - Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+
+          ```
+          [root@prd-openshift-master01-poa ~] # ansible-playbook -i /etc/ansible/hosts /opt/openshift-ansible/playbooks/byo/config.yml
+          PLAY RECAP ********************************************************************* 
+
+          localhost                  : ok=18   changed=9    unreachable=0    failed=0
+          prd-openshift-etcd01-poa.rbs.com.br : ok=97   changed=1    unreachable=0    failed=0
+          prd-openshift-etcd02-poa.rbs.com.br : ok=55   changed=1    unreachable=0    failed=0
+          prd-openshift-etcd03-poa.rbs.com.br : ok=55   changed=1    unreachable=0    failed=0 prd-openshift-lb01-poa.rbs.com.br : ok=44   changed=0    unreachable=0    failed=0
+          prd-openshift-master01-poa.rbs.com.br : ok=375  changed=58   unreachable=0    failed=0
+          prd-openshift-master02-poa.rbs.com.br : ok=234  changed=64   unreachable=0    failed=0
+          prd-openshift-master03-poa.rbs.com.br : ok=234  changed=64   unreachable=0    failed=0
+          prd-openshift-node01-poa.rbs.com.br : ok=114  changed=35   unreachable=0    failed=0
+          prd-openshift-node02-poa.rbs.com.br : ok=114  changed=35   unreachable=0    failed=0
+          prd-openshift-node03-poa.rbs.com.br : ok=114  changed=35   unreachable=0    failed=0
+          ```
+    > Para que a instalação tenha sido feita com sucesso, não pode haver nodes com falha ou não acessíveis (unreachable e failed devem ser iguais a 0 - zero).
+
+9. Verificando o status dos nodes
+   * Deve ser feito a partir do load-balance, pois este servidor será utilizado como o servidor base da instalação.
+
+         ```
+         [root@prd-openshift-master01-poa ~]# oc get nodes
+         NAME                                    STATUS                     AGE
+         prd-openshift-master01-poa.rbs.com.br   Ready                      6m
+         prd-openshift-master02-poa.rbs.com.br   Ready                      6m
+         prd-openshift-master03-poa.rbs.com.br   Ready,                     6m
+         prd-openshift-node01-poa.rbs.com.br     Ready                      6m
+         prd-openshift-node02-poa.rbs.com.br     Ready                      6m
+         prd-openshift-node03-poa.rbs.com.br     Ready                      5m
+    
+         [root@prd-openshift-master01-poa ~]# oc get pods -o wide
+         NAME                      READY     STATUS    RESTARTS   AGE       NODE
+         docker-registry-1-xlijx   1/1       Running   0          5m        prd-openshift-master02-poa.rbs.com.br
+         router-1-12p7n            1/1       Running   0          4m        prd-openshift-master01-poa.rbs.com.br
+         router-1-3lpzb            1/1       Running   0          4m        prd-openshift-master03-poa.rbs.com.br
+         router-1-jg6me            1/1       Running   0          4m        prd-openshift-master02-poa.rbs.com.br
+         ```
+
+10. Verificando status dos bancos etcd
+    * Deve ser feito em somente um dos masters que será utilizado como o servidor de instalação
+
+         ```bash
+         [root@prd-openshift-lb01-poa ~]# for j in `ls`; do for i in etcd01 etcd02 etcd03; \
+          do scp -pr $j root@prd-openshift-$i-poa.rbs.com.br:/etc/origin/master/$j;done; done 
+          master.etcd-ca.crt                 100% 1895     1.9KB/s   00:00
+          master.etcd-ca.crt                 100% 1895     1.9KB/s   00:00
+          master.etcd-ca.crt                 100% 1895     1.9KB/s   00:00
+          master.etcd-client.crt             100% 5878     5.7KB/s   00:00
+          master.etcd-client.crt             100% 5878     5.7KB/s   00:00
+          master.etcd-client.crt             100% 5878     5.7KB/s   00:00
+          master.etcd-client.key             100% 1704     1.7KB/s   00:00
+          master.etcd-client.key             100% 1704     1.7KB/s   00:00
+          master.etcd-client.key             100% 1704     1.7KB/s   00:00
+
+         [root@prd-openshift-lb01-poa ~]# etcdctl -C https://prd-openshift-etcd01-poa.rbs.com.br:2379,\
+          https://prd-openshift-etcd02-poa.rbs.com.br:2379,https://prd-openshift-etcd03-poa.rbs.com.br:2379 \
+          --ca-file=/etc/origin/master/master.etcd-ca.crt \
+          --cert-file=/etc/origin/master/master.etcd-client.crt \
+          --key-file=/etc/origin/master/master.etcd-client.key cluster-health
+          
+         [root@prd-openshift-lb01-poa ~]# etcdctl -C https://prd-openshift-etcd01-poa.rbs.com.br:2379,\
+          https://prd-openshift-etcd02-poa.rbs.com.br:2379,https://prd-openshift-etcd03-poa.rbs.com.br:2379 \
+          --ca-file=/etc/origin/master/master.etcd-ca.crt \
+          --cert-file=/etc/origin/master/master.etcd-client.crt \
+          --key-file=/etc/origin/master/master.etcd-client.key member list 
+         ```
+
+11. Verificando o status do load balance
+    - Acessar http://openshift.rbs.com.br:9000
+    - Acessar https://openshift.rbs.com.br:8443 
+
+
+12. Criar o volume (PV e PVC) para que o Registry possa armazenar as imagens dos containers
+    * Deve ser feito em somente um dos masters que será utilizado como o servidor de instalação
+    * Antes deve-se alocar espaço no servidor de NFS
+
+         ```bash
+         # mkdir /opt/volumes-configs
+         # cd /opt/volumes-configs
+         # vi pv-01.yaml
+         ###############################################################################
+         apiVersion: v1
+         kind: PersistentVolume
+         metadata:
+         name: pv-01
+         spec:
+           capacity:
+           storage: 200Gi
+         accessModes:
+           - ReadWriteOnce
+         nfs:
+           path: <inserir o diretorio alocado no servidor de NFS>
+           server: <inserir endereco do servidor de NFS>
+         persistentVolumeReclaimPolicy: Recycle
+         ################################################################################
+
+         # vi pvc-01.yaml
+         ################################################################################
+         apiVersion: v1
+         kind: PersistentVolumeClaim
+         metadata:
+           name: pvc-01
+         spec:
+           accessModes:
+             - ReadWriteOnce
+           resources:
+             requests:
+               storage: 200Gi
+         ################################################################################
+
+         # oc create -f pv-01.yaml
+         # oc create -f pvc-01.yam
+         ```
+
+13. Remover configurações prévias do Docker Registry
+   * Deve ser feito em somente um dos masters que será utilizado como o servidor de instalação
+
+         ```bash
+         # oc delete clusterrolebinding registry-registry-role && \
+           oc delete dc/docker-registry && oc delete svc/docker-registry && oc delete sa/registry
+         # for i in $(oc get secrets | grep registry | awk '{print $0}'); do oc delete secret/$i; done
+         # systemctl restart origin-master
+         ```
+
+14. Instalação do Docker Registry
+   * Deve ser feito em somente um dos masters que será utilizado como o servidor de instalação
+
+         ```bash
+         # cd /etc/origin/master
+         # oc create serviceaccount registry -n default
+         # oadm policy add-scc-to-user privileged system:serviceaccount:default:registry
+         # oadm registry --replicas=1 --config=admin.kubeconfig --service-account=openshift-registry.kubeconfig
+         # oc volume deploymentconfigs/docker-registry --add --name=v1 -t pvc --claim-name=pvc-01 --overwrite
+         # oc logs dc/docker-registry
+         # systemctl restart origin-master
+         ```
+
+15. Remover configurações prévias do Router
+   * Deve ser feito em somente um dos masters que será utilizado como o servidor de instalação
+
+         ```bash
+         # oc delete pods/router-1-deploy && oc delete dc/router && oc delete services/router && oc delete serviceaccounts/router
+         # oc create serviceaccount router -n default
+         # oadm policy add-scc-to-user privileged system:serviceaccount:default:router
+         # oadm router router --replicas=2 --service-account=${ROUTER_KUBECONFIG:-"$KUBECONFIG"} --service-account=router
+         ```
+
+16. Configurar o domínio padrão de DNS para os projetos
+   * Deve ser feito em todos os masters
+
+         ```bash
+         # vi /etc/origin/master/master-config.yaml
+         ################################################################################
+         routingConfig:
+            subdomain: paas.rbs.test
+         ################################################################################
+         # systemctl restart origin-master
+         ```
+
+17. Configurar a autenticação por AD/LDAP
+   * Deve ser feito em todos os masters
+
+         ```bash
+         # vi /etc/origin/master/master-config.yaml
+         ################################################################################
+         oauthConfig:
+           assetPublicURL: https://prd-openshift-master0X.rbs.com.br:8443/console/
+           grantConfig:
+             method: auto
+           identityProviders:
+           - name: "rbs"
+             challenge: true
+             login: true
+             mappingMethod: claim
+             provider:
+               apiVersion: v1
+               kind: LDAPPasswordIdentityProvider
+               attributes:
+                 id:
+                 - dn
+                 email:
+                 - mail
+                 name:
+                 - cn
+                 preferredUsername:
+                 - uid
+               bindDN: "CN=Paas_Ldap,OU=Usuarios de Servico,OU=Recursos,DC=RBS,DC=NET"
+               bindPassword: "<inserir senha>"
+               ca: ""
+               insecure: true
+               url: "ldap://adpoa015.rbs.net/ou=rbs,dc=rbs,dc=net?sAMAccountName?sub?(memberOf=CN=G-Paas,OU=Grupos de Servico,OU=Recursos,DC=RBS,DC=NET)"
+         ################################################################################
+         # systemctl restart origin-master
+         ``` 
+
+18. Permitir a execução de containers como root
+   * Deve ser feito em todos os masters
+
+        ```bash
+        # oc edit scc restricted
+        ################################################################################
+        runAsUser:
+        #  type: MustRunAsRange
+           type: RunAsAny
+        ################################################################################
+        ```
+
+19. Desinstalar o OpenShift
+   * Deve ser feito caso necessário no master que foi utilizado como o servidor de instalação
+
+        ```bash
+        # ansible-playbook -i /etc/ansible/hosts /opt/openshift-ansible/playbooks/adhoc/uninstall.yml
+        ```
