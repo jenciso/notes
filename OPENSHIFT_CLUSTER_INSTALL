@@ -1,0 +1,121 @@
+* Installing requirement packages 
+
+```sh
+ansible -u root -m shell -a "yum install -y wget git net-tools bind-utils iptables-services bridge-utils bash-completion" tst-openshift-*-poa
+```
+
+
+* Update Servers
+
+```sh
+ansible -u root -m shell -a "yum -y update" tst-openshift-*-poa
+```
+
+* Reboot 
+
+```sh
+ansible -u root -m shell -a "systemctl reboot" tst-openshift-*-poa
+```
+
+* Install epel-repo
+
+```sh
+ansible -u root -m shell -a "yum -y install epel-release" tst-openshift-*-poa
+```
+
+* Disable the EPEL repository globally
+
+```sh
+ansible -u root -m shell -a 'sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo' tst-openshift-*-poa
+```
+
+* Install packages dependences to install Ansible 
+
+```sh 
+ansible -u root -m shell -a 'yum -y --enablerepo=epel install ansible pyOpenSSL' tst-openshift-*-poa
+```
+
+* In ansible server (prd-corp-mgmt01-poa), install the ansible repo for openshift
+
+```sh
+[juan_condena@prd-corp-mgmt01-poa playbooks]$ git clone https://github.com/openshift/openshift-ansible
+Cloning into 'openshift-ansible'...
+remote: Counting objects: 26566, done.
+remote: Compressing objects: 100% (120/120), done.
+remote: Total 26566 (delta 50), reused 2 (delta 2), pack-reused 26441
+Receiving objects: 100% (26566/26566), 6.05 MiB | 2.25 MiB/s, done.
+Resolving deltas: 100% (15666/15666), done.
+[juan_condena@prd-corp-mgmt01-poa playbooks]$
+```
+
+* Install Docker in each server
+
+```sh
+ansible -u root -m shell -a 'yum -y install docker' tst-openshift-*-poa 
+```
+
+* Change docker config
+
+```sh
+ansible -u root -m lineinfile -a "dest=/etc/sysconfig/docker regexp=^OPTIONS\= line='OPTIONS=\'--selinux-enabled --insecure-registry 172.30.0.0/16\''" tst-openshift-*-poa
+```
+
+* Assuming the name for new disk in master-node /dev/sdb. Configure your docker storage
+
+```sh
+ansible -u root -m lineinfile -a "dest=/etc/sysconfig/docker-storage-setup regexp=^DEVS\= line='DEVS=/dev/sdb'" tst-openshift-*-poa
+ansible -u root -m lineinfile -a "dest=/etc/sysconfig/docker-storage-setup regexp=^VG\= line='VG=docker-vg'" tst-openshift-*-poa
+```
+
+* Run docker-storage-setup  
+
+```sh
+ansible -u root -m shell -a "docker-storage-setup" tst-openshift-*-poa 
+```
+
+* Verify the config file created
+
+```sh
+[juan_condena@prd-corp-mgmt01-poa ~]$ ansible -u root -m shell -a "cat /etc/sysconfig/docker-storage" tst-openshift-*-poa                     
+tst-openshift-master01-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+
+tst-openshift-node01-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+
+tst-openshift-node02-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+
+tst-openshift-master03-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+
+tst-openshift-master02-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+
+tst-openshift-node03-poa.rbs.com.br | SUCCESS | rc=0 >>
+DOCKER_STORAGE_OPTIONS="--storage-driver devicemapper --storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev/mapper/docker--vg-docker--pool --storage-opt dm.use_deferred_removal=true --storage-opt dm.use_deferred_deletion=true "
+```
+
+* Verify if docker is active and start it
+
+```sh
+ansible -u root -m shell -a "systemctl enable docker" tst-openshift-*-poa                                 
+ansible -u root -m shell -a "systemctl start docker" tst-openshift-*-poa                       
+ansible -u root -m shell -a "systemctl is-active docker" tst-openshift-*-poa                      
+```
+
+* Limit the logfile size in containers
+
+```sh
+ansible -u root -m lineinfile -a "dest=/etc/sysconfig/docker regexp=^OPTIONS\= line='OPTIONS=\'--selinux-enabled --insecure-registry 172.30.0.0/16 --log-opt max-size=1M --log-opt max-file=3\''" tst-openshift-*-poa        
+```
+
+* Restart Containers
+
+```sh
+ansible -u root -m shell -a "systemctl restart docker" tst-openshift-*-poa
+```
+
+Next step
+
+* Change the inventory file to install via ansible playbook provided by openshift-Ansible repo
