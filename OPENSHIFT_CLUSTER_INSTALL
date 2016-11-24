@@ -119,3 +119,38 @@ ansible -u root -m shell -a "systemctl restart docker" tst-openshift-*-poa
 Next step
 
 * Change the inventory file to install via ansible playbook provided by openshift-Ansible repo
+
+
+
+
+APAGAR O REGISTRY INICIAL
+------------------------
+oc delete clusterrolebinding registry-registry-role; oc delete dc/docker-registry ; oc delete svc/docker-registry ;oc delete sa/registry
+for i in $(oc get secrets | grep registry | awk '{print $0}'); do oc delete secret/$i; done
+
+systemctl restart origin-master-api
+
+CRIAR PV e PVC
+--------------
+registry-pv01.yaml
+registry-pvc01.yaml
+
+DEPLOY DO REGISTRY
+-------------------
+oadm policy add-role-to-user system:registry reguser
+oadm policy add-scc-to-user privileged system:serviceaccount:default:registry
+oadm registry --config=admin.kubeconfig --service-account=registry --selector='region=infra'
+oc volume deploymentconfigs/docker-registry --add --name=registry-storage -t pvc --claim-name=registry-pvc01 --overwrite
+
+
+APAGAR ROUTER
+--------------
+oc delete pods/router-1-deploy && oc delete dc/router && oc delete services/router && oc delete serviceaccounts/router
+
+CREAR ROUTER
+------------
+oc create serviceaccount router -n default
+oadm policy add-scc-to-user privileged system:serviceaccount:default:router
+oadm router --replicas=3 --credentials=/etc/origin/master/openshift-router.kubeconfig --service-account=router --selector='region=infra'
+
+
