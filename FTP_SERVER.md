@@ -1,10 +1,12 @@
 # INSTALACION DE SERVIDOR VSFTP + MYSQL + PAM-MYSQL EN AWS EC2 
 
 OS: Amazon Linux AMI release 2016.09
-Baseado: https://www.howtoforge.com/virtual-hosting-with-vsftpd-and-mysql-on-ubuntu-12.04
-Modo Pasivo: http://stackoverflow.com/questions/7052875/setting-up-ftp-on-amazon-cloud-server
+Based: https://www.howtoforge.com/virtual-hosting-with-vsftpd-and-mysql-on-ubuntu-12.04
+Config Passive mode: http://stackoverflow.com/questions/7052875/setting-up-ftp-on-amazon-cloud-server
 
-## Pasos
+## Steps
+
+* Install pre-requisites packages:
 
 ```
 yum install make gcc-c++ autoconf automake libtool rpm-build
@@ -12,6 +14,8 @@ yum pam-devel
 yum install cyrus-sasl-devel
 yum install mysql mysql-server mysql-devel
 ```
+
+* Build module PAM
 
 ```
 wget ftp://mirror.switch.ch/pool/4/mirror/fedora/linux/releases/23/Everything/source/SRPMS/p/pam_mysql-0.7-0.20.rc1.fc23.src.rpm
