@@ -1,4 +1,4 @@
-# INSTALACION DE SERVIDOR VSFTP + MYSQL + PAM-MYSQL EN AWS EC2 
+# INSTALL VSFTPD + MYSQL + PAM-MYSQL EN AWS EC2 
 
 OS: Amazon Linux AMI release 2016.09
 Based: https://www.howtoforge.com/virtual-hosting-with-vsftpd-and-mysql-on-ubuntu-12.04
