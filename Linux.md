@@ -165,3 +165,9 @@ sed -i -e "s/enp0s3/eth0/" /etc/sysconfig/network-scripts/ifcfg-eth0
 ```
 
 Step 4: Reboot
+
+
+## Example for Ldap Search
+```
+ldapsearch -h e-unicred.com.br -x -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicred,DC=com,DC=br" -W -b "dc=e-unicred,dc=com,dc=br" "(sAMAccountName=juan.enciso)"
+```
