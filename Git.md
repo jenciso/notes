@@ -37,3 +37,10 @@ git push <remote> <branch> --force
 # Or
 git push <remote> <branch> -f
 ```
+
+## Change repository URL
+
+Example:
+```
+git remote set-url origin git@github.com:jenciso/notes.git
+```
