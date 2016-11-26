@@ -77,6 +77,7 @@ Bye
 ```
 useradd --home /home/vsftpd --gid nobody -m --shell /bin/false vsftpd 
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf_orig
+```
 
 * Config File
 
