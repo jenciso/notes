@@ -113,3 +113,7 @@ pasv_max_port=1048
 ```
 
 * Restart service
+
+```
+service vsftpd restart
+```
