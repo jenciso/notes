@@ -13,15 +13,23 @@ yum install cyrus-sasl-devel
 yum install mysql mysql-server mysql-devel
 ```
 
+```
 wget ftp://mirror.switch.ch/pool/4/mirror/fedora/linux/releases/23/Everything/source/SRPMS/p/pam_mysql-0.7-0.20.rc1.fc23.src.rpm
 rpmbuild --rebuild /home/ec2-user/pam_mysql-0.7-0.20.rc1.fc23.src.rpm   
+```
 
+```
 yum install ./rpmbuild/RPMS/x86_64/pam_mysql-0.7-0.20.rc1.amzn1.x86_64.rpm
+```
 
+```
 service mysqld start
 /usr/libexec/mysql55/mysql_secure_installation
+```
 
+* Configure Mysql
 
+```
 [root@TerraAPP-APP1 ~]# mysql -u root -p 
 Enter password: 
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -62,7 +70,45 @@ Query OK, 0 rows affected (0.01 sec)
 
 mysql> quit;
 Bye
+```
 
+* Final step
 
+```
 useradd --home /home/vsftpd --gid nobody -m --shell /bin/false vsftpd 
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf_orig
+
+* Config File
+
+```
+vim /etc/vsftpd/vsftpd.conf
+``` 
+
+```
+listen=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+nopriv_user=vsftpd
+chroot_local_user=YES
+secure_chroot_dir=/var/ftp/pub
+pam_service_name=vsftpd
+rsa_cert_file=/etc/ssl/certs/vsftpd.pem
+guest_enable=YES
+guest_username=vsftpd
+local_root=/data/sites/www.$USER
+user_sub_token=$USER
+virtual_use_local_privs=YES
+user_config_dir=/etc/vsftpd/vsftpd_user_conf
+pasv_enable=YES
+pasv_address="Your Public IP"
+pasv_min_port=1024
+pasv_max_port=1048
+
+```
+
+* Restart service
