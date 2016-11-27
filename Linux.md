@@ -171,3 +171,15 @@ Step 4: Reboot
 ```
 ldapsearch -h e-unicred.com.br -x -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicred,DC=com,DC=br" -W -b "dc=e-unicred,dc=com,dc=br" "(sAMAccountName=juan.enciso)"
 ```
+
+## Create loop storage
+```
+#dd if=/dev/zero of=~/file.img bs=1MiB count=10
+#losetup --find --show ~/file.img
+/dev/loop0
+#mkfs -t ext2 /dev/loop0
+#mount /dev/loop0 /mnt
+...
+#umount /dev/loop0
+#losetup --detach /dev/loop0
+```
