@@ -18,4 +18,6 @@ semodule -l | grep permissive
 ```
 semanage permissive -d httpd_t
 ```
+## Create policy
+https://www.nixpal.com/selinux-security/
 
