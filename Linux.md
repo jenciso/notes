@@ -1,3 +1,7 @@
+## Add disk without reboot
+
+http://linoxide.com/linux-how-to/add-new-disk-centos-7-without-rebooting/
+
 ## Add LVM disk
 Step 1: Change table partition
 ```
