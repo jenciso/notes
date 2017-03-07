@@ -187,3 +187,6 @@ ldapsearch -h e-unicred.com.br -x -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicre
 #umount /dev/loop0
 #losetup --detach /dev/loop0
 ```
+
+## Bonding Interfaces
+https://www.unixmen.com/linux-basics-create-network-bonding-on-centos-76-5/
