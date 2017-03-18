@@ -16,6 +16,12 @@ lvcreate -l 100%FREE vg-data -n lv-data
 mkfs.ext4 -m 0 /dev/vg-data/lv-data
 mkdir /data
 ```
+Alternative 2, use xfs
+
+```
+mkfs.xfs /dev/vg-data/lv-data
+```
+
 Step 3: Add entry in fstab
 ```
 /dev/vg-data/lv-data    /data           ext4    defaults        1 1
