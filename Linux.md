@@ -5,21 +5,21 @@ http://linoxide.com/linux-how-to/add-new-disk-centos-7-without-rebooting/
 ## Add LVM disk
 Step 1: Change table partition
 ```
-fdisk /dev/sdc
+fdisk /dev/sdb
 ```
 Choose type LVM:8e
 Step 2: Create VG and LVM group
 ```
-pvcreate /dev/sdc1
-vgcreate vg-data /dev/sdc1
+pvcreate /dev/sdb1
+vgcreate vg-data /dev/sdb1
 lvcreate -l 100%FREE vg-data -n lv-data
-mkfs.ext4 -m 0 /dev/vg-data/lv-data
+mkfs.xfs /dev/vg-data/lv-data
 mkdir /data
 ```
 Alternative 2, use xfs
 
 ```
-mkfs.xfs /dev/vg-data/lv-data
+mkfs.ext4 -m 0 /dev/vg-data/lv-data
 ```
 
 Step 3: Add entry in fstab
