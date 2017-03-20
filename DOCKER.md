@@ -1,3 +1,13 @@
+## DELETE all containers
+```
+docker rm $(docker ps -a -q)
+```
+
+## DELETE all images
+```
+docker rmi $(docker images -q)
+```
+
 ## Running privileged mode
 
 ```
