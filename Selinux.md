@@ -21,3 +21,7 @@ semanage permissive -d httpd_t
 ## Create policy
 https://www.nixpal.com/selinux-security/
 
+## Why was blocked?
+```
+cat /var/log/audit/audit.log | audit2why 
+```
