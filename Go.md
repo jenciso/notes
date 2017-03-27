@@ -44,6 +44,7 @@ mkdir $GOPATH/src/github.com/user/ola
 Step 6: Script
 ```
 vim $GOPATH/src/github.com/user/ola/ola.go 
+```
 
 ```
 package main
@@ -54,5 +55,9 @@ func main() {
 	fmt.Printf("Olá, mundo.\n")
 }
 ```
+```
 go install github.com/user/ola
 ```
+
+Reference:
+http://www.golangbr.org/doc/codigo
