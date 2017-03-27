@@ -93,3 +93,29 @@ Find by time
 find /home/you -iname "*.txt" -mtime -60 -print
 ```
 http://www.cyberciti.biz/faq/howto-finding-files-by-date/
+
+## Create file using EOF
+
+```
+cat <<EOF >> brightup.sh
+!/bin/bash
+curr=`cat /sys/class/backlight/intel_backlight/actual_brightness`
+if [ $curr -lt 4477 ]; then
+   curr=$((curr+406));
+   echo $curr  > /sys/class/backlight/intel_backlight/brightness;
+fi
+EOF
+```
+If you don't want to translate environment vars. Literally text will be written, use simple quotes
+
+```
+cat << 'EOF' >> brightup.sh
+!/bin/bash
+curr=`cat /sys/class/backlight/intel_backlight/actual_brightness`
+if [ $curr -lt 4477 ]; then
+   curr=$((curr+406));
+   echo $curr  > /sys/class/backlight/intel_backlight/brightness;
+fi
+EOF
+```
+
