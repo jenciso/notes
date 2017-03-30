@@ -196,3 +196,19 @@ ldapsearch -h e-unicred.com.br -x -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicre
 
 ## Bonding Interfaces
 https://www.unixmen.com/linux-basics-create-network-bonding-on-centos-76-5/
+
+## Extract RPM Files
+```
+$ mkdir test
+$ cd test
+$ wget https://www.cyberciti.biz/files/lighttpd/rhel4-php5-fastcgi/php-5.1.4-1.esp1.x86_64.rpm
+$ rpm2cpio php-5.1.4-1.esp1.x86_64.rpm | cpio -idmv
+```
+
+## See scripts in RPM files
+```
+rpm -qp --scripts foo.rpm
+```
+```
+rpm -q --scripts httpd
+```
