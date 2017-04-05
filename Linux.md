@@ -1,3 +1,13 @@
+## Remove service in systemd
+```
+systemctl stop [servicename]
+systemctl disable [servicename]
+rm /etc/systemd/system/[servicename]
+rm /etc/systemd/system/[servicename] symlinks that might be related
+systemctl daemon-reload
+systemctl reset-failed
+```
+
 ## Add disk without reboot
 
 http://linoxide.com/linux-how-to/add-new-disk-centos-7-without-rebooting/
