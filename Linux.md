@@ -34,7 +34,7 @@ mkfs.ext4 -m 0 /dev/vg-data/lv-data
 
 Step 3: Add entry in fstab
 ```
-/dev/vg-data/lv-data    /data           ext4    defaults        1 1
+/dev/vg-data/lv-data    /data           xfs    defaults        1 1
 ```
 
 ## Change default boot entry in CentOS
