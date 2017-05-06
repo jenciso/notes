@@ -119,3 +119,8 @@ fi
 EOF
 ```
 
+## Replace text recursively in a tree of files  
+
+```
+find . -name '*' -type f -exec sed -i 's/elastic_version/elk_version/' {} \;
+```
