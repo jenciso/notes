@@ -21,7 +21,19 @@ wmic qfe | find "123456"
 ```
 
 * In powerShell
+
+List all hotfix:
+```
+Get-Hotfix 
+```
+A specific KB:
 ```
 Get-Hotfix -id kb123456
 ```
+
+Another method
+```
+Get-ChildItem -Path “HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\HotFix”
+```
+
 
