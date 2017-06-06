@@ -67,5 +67,5 @@ Delete exited containers
 docker ps --filter status=dead --filter status=exited -aq | xargs docker rm -v
 ```
 
-More info, [here] (https://lebkowski.name/docker-volumes/)
+More info, [here](https://lebkowski.name/docker-volumes/)
 
