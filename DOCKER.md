@@ -56,3 +56,16 @@ Permit strace in ubuntu
 docker run -i -t --cap-add=SYS_PTRACE --security-opt=apparmor:unconfined fedora  /bin/bash 
 ```
 
+## Clean Storage Docker
+
+Delete image without tag 
+```
+docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi
+```
+Delete exited containers
+```
+docker ps --filter status=dead --filter status=exited -aq | xargs docker rm -v
+```
+
+More info, [here] (https://lebkowski.name/docker-volumes/)
+
