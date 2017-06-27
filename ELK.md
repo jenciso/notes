@@ -10,3 +10,6 @@ curl  'http://elasticsearch.iplanet.work:9200/_cat/indices/filebeat-2017*?v&s=do
 curl  'http://elasticsearch.iplanet.work:9200/_cat/indices/filebeat-2017*?v&s=index:desc'
 curl  'http://elasticsearch.iplanet.work:9200/_cat/indices/filebeat-*?v&s=index:desc'
 ```
+
+Source:
+https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html
