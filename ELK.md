@@ -17,7 +17,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html
 ## Change priority to repair index
 
 ```
-curl -XPUT 'http://elasticsearch-hlg.e-unicred.com.br:9200/.kibana/_settings?pretty' -H 'Content-Type: application/json' -d '{ "index.priority": 99 }'
+curl -XPUT 'http://elasticsearch-hlg.iplanet.work:9200/.kibana/_settings?pretty' -H 'Content-Type: application/json' -d '{ "index.priority": 99 }'
 ```
 Check changes
 ```
