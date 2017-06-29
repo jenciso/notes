@@ -41,3 +41,5 @@ Check changes
 }
 [root@satelite ~]# 
 ```
+Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/recovery-prioritization.html
+
