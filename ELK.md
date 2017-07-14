@@ -43,3 +43,16 @@ Check changes
 ```
 Source: https://www.elastic.co/guide/en/elasticsearch/reference/current/recovery-prioritization.html
 
+## Check the thread_pool
+```
+curl http://elasticsearch:9200/_cat/thread_pool/bulk?v&h=id,name,active,rejected,completed,queue_size,queue,host
+
+id                     name active rejected completed queue_size queue host
+ADTJTATWQtyARVF3lwy9Rg bulk      0        0         0        400     0 10.64.12.55
+FyxOEC5wSNG3Ycb7pI5pZA bulk      0        0         0        400     0 10.64.12.51
+VaLh52bTRXSB7xwRInsFLA bulk      1        0    954647        400     0 10.64.12.58
+m6q7hXg8Q1O2pbl9hoqoIQ bulk      0        0         0        400     0 10.64.12.52
+hLETdmwER6CGmZpWgEnSwA bulk      0        0   1225911        400     0 10.64.12.57
+2xuNTDnnQemz9Ro-bJhh1w bulk      0        0         0        400     0 10.64.12.54
+BdDPz3hXTLeusB818taN1g bulk      0        0    911982        400     0 10.64.12.59
+```
