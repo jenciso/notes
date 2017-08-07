@@ -222,3 +222,34 @@ rpm -qp --scripts foo.rpm
 ```
 rpm -q --scripts httpd
 ```
+
+## Check Threads system wide settings
+
+```
+echo 100000 > /proc/sys/kernel/threads-max
+```
+
+```
+$ cat /proc/loadavg
+0.41 0.45 0.57 3/749 28174
+```
+
+Number of process 
+```
+$ ps -elf | wc -l  
+220
+```
+Number of process including threads
+```
+$ ps -elfT | wc -l  
+385
+```
+
+From a specific pid
+
+```
+ ps -p JBOSSPID -lfT | wc -l
+```
+Source 
+http://www.mastertheboss.com/jboss-server/jboss-monitoring/how-to-solve-javalangoutofmemoryerror-unable-to-create-new-native-thread
+
