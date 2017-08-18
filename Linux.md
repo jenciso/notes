@@ -1,3 +1,9 @@
+## How get a kernel panic
+
+```
+echo c > /proc/sysrq-trigger
+```
+
 ## Remove service in systemd
 ```
 systemctl stop [servicename]
