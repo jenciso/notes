@@ -181,7 +181,7 @@ GRUB_CMDLINE_LINUX="rd.lvm.lv=centos/swap vconsole.font=latarcyrheb-sun16 rd.lvm
 
 Step 2: Re-generate a new grub using the new config file
 ```
-grub2-mkconfig -o /boot/grub2/grug.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
 Step 3: Rename the "enp0s3" network file to "eth0", and modify its content
