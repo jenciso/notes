@@ -1,3 +1,23 @@
+## Find zombies process
+
+```
+ps aux | grep 'Z'
+```
+What you get is Zombies and anything else with a Z in it, so you will also get the grep:
+```
+USER       PID     %CPU %MEM  VSZ    RSS TTY      STAT START   TIME COMMAND
+usera      13572   0.0  0.0   7628   992 pts/2    S+   19:40   0:00 grep --color=auto Z
+usera      93572   0.0  0.0   0      0   ??       Z    19:40   0:00 something
+```
+Find the zombie's parent:
+```
+pstree -p -s 93572
+```
+will give you 
+```
+init(1)---cnid_metad(1311)---cnid_dbd(5145)
+```
+
 ## List all repositories and PPAs 
 ```
 egrep -v '^#|^ *$' /etc/apt/sources.list /etc/apt/sources.list.d/*
