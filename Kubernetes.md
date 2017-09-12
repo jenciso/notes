@@ -1,3 +1,6 @@
+## Kubectl man page 
+https://kubernetes.io/docs/user-guide/kubectl/
+
 ## Running busybox
 ```
 kubectl run -i -t busybox --image=busybox --restart=Never
