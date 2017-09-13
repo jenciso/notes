@@ -4,7 +4,7 @@
 echo c > /proc/sysrq-trigger
 ```
 
-## Remove service in systemd
+## Remove a service in systemd
 ```
 systemctl stop [servicename]
 systemctl disable [servicename]
