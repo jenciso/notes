@@ -4,7 +4,7 @@
 sudo yum install -y python-pip python-devel
 sudo pip install docker-compose
 ```
-Verificando
+Verify
 ```
 [root@pachacutec asciinema-server]# docker-compose --version
 docker-compose version 1.16.1, build 6d1ac219
