@@ -29,3 +29,7 @@ cd ~/.ssh
 ssh-keygen -f id_rsa -p
 ```
 
+## SSH without hostFile
+```
+ssh -o UserKnownHostsFile=/dev/null 10.2.41.1
+```
