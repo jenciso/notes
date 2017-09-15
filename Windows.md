@@ -1,15 +1,19 @@
-## how-can-i-ssh-into-bash-on-ubuntu-on-windows-10
-
+## How can i ssh into bash on ubuntu on windows 10
+```
 sudo apt-get remove openssh-server
 sudo apt-get install openssh-server
-sudo nano /etc/ssh/sshd_config and disallow root login by setting PermitRootLogin no
+sudo nano /etc/ssh/sshd_config 
+```
+and disallow root login by setting `PermitRootLogin no`
 Then add a line beneath it that says:
-
+```
 AllowUsers yourusername
-
-and make sure PasswordAuthentication is set to yes if you want to login using a password.
-Disable privilege separation by adding/modifying : UsePrivilegeSeparation no
+```
+and make sure `PasswordAuthentication is set to yes` if you want to login using a password.
+Disable privilege separation by adding/modifying : `UsePrivilegeSeparation no`
+```
 sudo service ssh --full-restart
+```
 Connect to your Linux subsystem from Windows using a ssh client like PuTTY.
 
 
