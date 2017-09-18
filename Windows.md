@@ -1,3 +1,9 @@
+## Change language in Linux System on windows 10 
+
+```sh
+sudo update-locale LANG=en_US.UTF8
+```
+
 ## How can i ssh into bash on ubuntu on windows 10
 ```
 sudo apt-get remove openssh-server
