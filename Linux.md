@@ -1,3 +1,25 @@
+## how to redirect output of systemd service to a file
+
+Is there a more elegant way to solve the problem: send the `stdout/stderr` to syslog with an identifier and instruct your syslog manager to split its output by programname.
+
+Use the following properties in your systemd service unit file:
+
+```
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=<your program identifier> # without any quote
+```
+
+Then, assuming your distribution is using rsyslog to manage syslogs, create a file in `/etc/rsyslog.d/<new_file>.conf` with the following content:
+
+```
+if $programname == '<your program identifier>' then /path/to/log/file.log
+if $programname == '<your program identifier>' then ~
+```
+
+restart rsyslog (sudo systemctl restart rsyslog) and enjoy! Your program stdout/stderr will still be available through journalctl (`sudo journalctl -u`) but they will also be available in your file of choice.
+
+
 ## How get a kernel panic
 
 ```
