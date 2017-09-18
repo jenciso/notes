@@ -19,6 +19,13 @@ if $programname == '<your program identifier>' then ~
 
 restart rsyslog (sudo systemctl restart rsyslog) and enjoy! Your program stdout/stderr will still be available through journalctl (`sudo journalctl -u`) but they will also be available in your file of choice.
 
+Source: http://wiki.rsyslog.com/index.php/Filtering_by_program_name
+
+
+> From the systemd.exec(5) man page:
+
+> StandardOutput=
+> Controls where file descriptor 1 (STDOUT) of the executed processes is connected to. Takes one of inherit, null, tty, journal, syslog, kmsg, journal+console, syslog+console, kmsg+console or socket.
 
 ## How get a kernel panic
 
