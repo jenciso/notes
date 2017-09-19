@@ -311,3 +311,15 @@ update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/editor (editor
 root@TEC1971:~#
 ```
 
+## visudo NOPASSWD
+
+```
+For a single user :
+```yaml 
+superuser ALL=(ALL) NOPASSWD:ALL
+```
+
+For a group :
+```yaml
+%supergroup  ALL=(ALL) NOPASSWD:ALL
+``
