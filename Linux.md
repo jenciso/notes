@@ -288,3 +288,26 @@ From a specific pid
 Source 
 http://www.mastertheboss.com/jboss-server/jboss-monitoring/how-to-solve-javalangoutofmemoryerror-unable-to-create-new-native-thread
 
+
+## How change default editor (ex. from nano to vim, in visudo)
+
+```sh
+root@TEC1971:~# vim /usr/share/applications/defaults.list
+root@TEC1971:~# visudo
+visudo: /etc/sudoers.tmp unchanged
+root@TEC1971:~# sudo update-alternatives --config editor
+There are 4 choices for the alternative editor (providing /usr/bin/editor).
+
+  Selection    Path                Priority   Status
+------------------------------------------------------------
+* 0            /bin/nano            40        auto mode
+  1            /bin/ed             -100       manual mode
+  2            /bin/nano            40        manual mode
+  3            /usr/bin/vim.basic   30        manual mode
+  4            /usr/bin/vim.tiny    10        manual mode
+
+Press enter to keep the current choice[*], or type selection number: 3
+update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/editor (editor) in manual mode
+root@TEC1971:~#
+```
+
