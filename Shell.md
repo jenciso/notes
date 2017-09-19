@@ -1,3 +1,11 @@
+## Delete files using find 
+
+```sh
+find /path/to/directory/ -mindepth 1 -mtime +5 -delete
+```
+Replace `-delete` with `-depth -print` to test this command before you run it (-delete implies -depth).
+
+
 ## Find zombies process
 
 ```
