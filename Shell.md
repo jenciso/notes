@@ -1,5 +1,6 @@
-## Delete files using find 
+## Delete old files using find 
 
+Ex: delete older files, more than 5 days
 ```sh
 find /path/to/directory/ -mindepth 1 -mtime +5 -delete
 ```
