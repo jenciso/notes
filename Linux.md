@@ -322,15 +322,15 @@ superuser ALL=(ALL) NOPASSWD:ALL
 For a group :
 ```yaml
 %supergroup  ALL=(ALL) NOPASSWD:ALL
-``
+```
 
 ## SIMPLE, EASY NAT / PORT FORWARDING FOR IPTABLES 
 
-```
+```sh
 sudo echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 or
-```
+```sh
 sudo vi /etc/sysctl.conf
 net.ipv4.ip_forward=1
 ```
@@ -339,20 +339,20 @@ eth0: primary nic (public)
 
 eth1: secondary nic (private)
 
-```
+```sh
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
 sudo iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 ```
 
 save
-```
+```sh
 sudo service iptables-persistent save
 ```
 
 ## PORT-FORWARDING
 
-```
+```sh
 sudo iptables -I FORWARD -p tcp -i eth0 -d <private LAN server IP> --dport <inbound port> -j ACCEPT
 sudo iptables -t nat -A PREROUTING -p tcp -i eth0 -d <Firewall Public IP> --dport <Inbound Port> -j DNAT --to-destination <private LAN server IP>:<Port where service runs>
 ```
