@@ -313,9 +313,8 @@ root@TEC1971:~#
 
 ## visudo NOPASSWD
 
-```
 For a single user :
-```yaml 
+```yaml
 superuser ALL=(ALL) NOPASSWD:ALL
 ```
 
@@ -334,10 +333,7 @@ or
 sudo vi /etc/sysctl.conf
 net.ipv4.ip_forward=1
 ```
-
-eth0: primary nic (public)
-
-eth1: secondary nic (private)
+eth0: primary nic (public) / eth1: secondary nic (private)
 
 ```sh
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
