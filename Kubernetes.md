@@ -5,7 +5,13 @@ https://kubernetes.io/docs/user-guide/kubectl/
 ```
 kubectl run -i -t busybox --image=busybox --restart=Never
 kubectl delete pod busybox
-```` 
+``` 
+
+## Another busybox 
+```
+kubectl run curl-demo --image=radial/busyboxplus:curl -i --tty --rm
+```
+
 ## Running nginx with replicas
 ```
 kubectl run nginx --image=nginx --replicas=2
