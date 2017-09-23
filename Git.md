@@ -1,3 +1,20 @@
+## Changing Your Git Author Identity
+
+globally
+```
+$ git config --global user.name "John Doe"
+$ git config --global user.email "john@doe.org"
+```
+for one repo only
+```
+$ git config user.name "John Doe"
+$ git config user.email "john@doe.org"
+```
+Changing the Author Information Just for the Next Commit
+```
+git commit --author="John Doe <john@doe.org>"
+```
+
 ## Save credential for long time
 Step 1: 
 ```
