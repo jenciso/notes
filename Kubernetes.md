@@ -16,6 +16,12 @@ kubectl run curl-demo --image=radial/busyboxplus:curl -i --tty --rm
 ```
 kubectl run nginx --image=nginx --replicas=2
 ```
+
+## Scale deployment
+```
+kubectl scale deployment kubernetes-dashboard -n kube-system --replicas=3
+```
+
 ## When generate new certificates, you need to delete all secrtes to recreate it
 Ex.
 ```
