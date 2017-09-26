@@ -29,3 +29,7 @@ kubectl delete secrets --all -n default
 kubectl delete secrets --all -n kube-system
 kubectl delete secrets --all -n kube-public
 ```
+## Delete all pods with crashloopBackoff
+```
+kubectl get pods --all-namespaces -o wide | grep CrashLoopBackOff | awk '{ system("kubectl delete pod "$2" -n "$1) }'
+```
