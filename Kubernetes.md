@@ -33,3 +33,23 @@ kubectl delete secrets --all -n kube-public
 ```
 kubectl get pods --all-namespaces -o wide | grep CrashLoopBackOff | awk '{ system("kubectl delete pod "$2" -n "$1) }'
 ```
+
+## Encode base 64 User:Pass for basic authentication via curl
+
+```
+jenciso@dellPE:~$ echo -n juan.enciso:33d48nc4d3d | base64                                                                             
+anVhbi5lbmNpc286MzNkNDhuYzRkM2Q=
+jenciso@dellPE:~$ curl -s -k https://apik8s-dev.iplanet.work/version -H 'Authorization: Basic anVhbi5lbmNpc286MzNkNDhuYzRkM2Q='
+{
+  "major": "1",
+  "minor": "4",
+  "gitVersion": "v1.4.7",
+  "gitCommit": "92b4f971662de9d8770f8dcd2ee01ec226a6f6c0",
+  "gitTreeState": "clean",
+  "buildDate": "2016-12-10T04:43:42Z",
+  "goVersion": "go1.6.3",
+  "compiler": "gc",
+  "platform": "linux/amd64"
+* Connection #0 to host apik8s-dev.iplanet.work left intact
+}jenciso@dellPE:~$  
+```
