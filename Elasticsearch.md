@@ -43,7 +43,16 @@ Ex: show deciders
                     "explanation": "reached the limit of outgoing shard recoveries [2] on the node [BdDPz3hXTLeusB818taN1g] which holds the primary, cluster setting [cluster.routing.allocation.node_concurrent_outgoing_recoveries=2] (can also be set via [cluster.routing.allocation.node_concurrent_recoveries])"
                 }
             ],
-```            
+```   
+
+```
+            "deciders": [
+                {
+                    "decider": "disk_threshold",
+                    "decision": "NO",
+                    "explanation": "the node is above the low watermark cluster setting [cluster.routing.allocation.disk.watermark.low=90%], using more disk space than the maximum allowed [90.0%], actual free: [9.975312000592542%]"
+                },
+```
       
 ## Set watermark
 
