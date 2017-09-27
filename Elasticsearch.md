@@ -1,5 +1,14 @@
-## Get the list for unassigned shard with the reason for that
+## Unassigned shard tutorial
+https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/
 
+## Red Cluster - Roroute 
+http://blog.kiyanpro.com/2016/03/06/elasticsearch/reroute-unassigned-shards/
+
+## What happened with my allocation nodes?
+https://www.elastic.co/guide/en/elasticsearch/reference/5.0/cluster-allocation-explain.html
+
+
+## Get the list for unassigned shard with the reason for that
 ```
 curl -s http://localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason| grep UNASSIGNED
 ```
