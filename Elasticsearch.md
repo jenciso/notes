@@ -13,3 +13,22 @@ shards disk.indices disk.used disk.avail disk.total disk.percent host        ip 
     63                                                                                   UNASSIGNED
 jenciso@TEC1971:~$ 
 ```
+
+## Explain some details for disk allocation. Ex. 
+```
+curl -vs "http://localhost:9200/_cluster/allocation/explain?include_disk_info=true"
+```
+
+## Set watermark
+
+```
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.disk.watermark.low": "90%",
+    "cluster.routing.allocation.disk.watermark.high": "95%"
+  }
+}
+```
+> source https://www.elastic.co/guide/en/elasticsearch/reference/5.4/disk-allocator.html#disk-allocator
+
