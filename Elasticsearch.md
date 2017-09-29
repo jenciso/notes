@@ -1,3 +1,6 @@
+## Index status
+https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html
+
 ## Unassigned shard tutorial
 https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/
 
