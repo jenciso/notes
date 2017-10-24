@@ -1,3 +1,9 @@
+## List all files recursively in an order by date and human readly
+
+```
+stat --printf="%y %n\n" $(ls -tr $(find * -type f))
+```
+
 ## Delete old files using find 
 
 Ex: delete older files, more than 5 days
