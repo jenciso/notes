@@ -1,6 +1,16 @@
 ## Kubectl man page 
 https://kubernetes.io/docs/user-guide/kubectl/
 
+## Get nodePort of all svc
+```
+kubectl get svc --all-namespaces -ao jsonpath='{range .items[*]}{@.metadata.name}{"\t"}{@.metadata.namespace}{"\t"}{@.spec.ports[0].nodePort}{"\n"}{end}'
+```
+
+## Get all images for each pod
+```
+kubectl get pods -ao jsonpath='{range .items[*]}{@.metadata.name}{" "}{@.spec.containers[*].image}{"\n"}{end}
+```
+
 ## Running busybox
 ```
 kubectl run -i -t busybox --image=busybox --restart=Never
