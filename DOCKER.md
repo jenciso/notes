@@ -10,6 +10,10 @@ Verify
 docker-compose version 1.16.1, build 6d1ac219
 [root@pachacutec asciinema-server]# 
 ```
+## CLEAN all containers with state=Exited
+```
+docker rm $(docker ps -a -q -f status=exited)
+```` 
 
 ## DELETE all containers
 ```
