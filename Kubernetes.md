@@ -1,6 +1,11 @@
 ## Kubectl man page 
 https://kubernetes.io/docs/user-guide/kubectl/
 
+## Order by AGE
+```
+kubectl get pod --all-namespaces --sort-by=.status.startTime 
+```
+
 ## Get nodePort of all svc
 ```
 kubectl get svc --all-namespaces -ao jsonpath='{range .items[*]}{@.metadata.name}{"\t"}{@.metadata.namespace}{"\t"}{@.spec.ports[0].nodePort}{"\n"}{end}'
