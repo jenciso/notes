@@ -1,6 +1,7 @@
 
 ### Modify timeouts for slow networks
 
+Change your `kafka-properties`
 ```
 zookeeper.connection.timeout.ms=60000
 zookeeper.session.timeout.ms=60000
