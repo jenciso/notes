@@ -1,3 +1,21 @@
+## Extend partition size
+
+Ex. Using these values: 
+``` 
+Disk: /dev/sdc1
+VG: vg-data
+LV: lv-data
+```
+
+```
+fdisk /dev/sdc
+pvcreate /dev/sdc1
+vgextend vg-data /dev/sdc1
+lvextend -L+99G /dev/vg-data/lv-data
+xfs_growfs  /dev/vg-data/lv-data
+```
+
+
 ## how to redirect output of systemd service to a file
 
 Is there a more elegant way to solve the problem: send the `stdout/stderr` to syslog with an identifier and instruct your syslog manager to split its output by programname.
