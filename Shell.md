@@ -1,3 +1,9 @@
+## How test HTTPS URL with a given IP Address using CURL
+
+```
+curl -vs https://www.realizaunicred.com.br/ --resolve 'www.realizaunicred.com.br:443:189.10.179.93' -o /dev/null
+```
+
 ## List all files recursively in an order by date and human readly
 
 ```
