@@ -1,3 +1,9 @@
+## Delete and purge some specific container images   
+```
+docker rmi $(docker images -q -f "dangling=true")
+docker images | grep ^nexus | awk '{print $1":"$2}' | xargs docker rmi
+```
+
 ## Installing docker-compose on Centos 7
 
 ```
