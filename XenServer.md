@@ -21,6 +21,21 @@ Step 1: Set memory
 ## PCI-Passtrough
 
 ```
+
+Xenserver 7.1
+**************
+lspci
+
+/opt/xensource/libexec/xen-cmdline --set-dom0 "xen-pciback.hide=(02:00.0)"
+
+xe vm-list
+
+xe vm-param-set other-config:pci=0/0000:02:00.0 uuid=7697924b-a101-0a70-d775-5070cc8aa09b
+
+# Verify using 
+
+xe vm-param-list uuid=7697924b-a101-0a70-d775-5070cc8aa09b
+
 Xenserver 6.1 - PCI-Passtrough
 *******************************
 
@@ -55,3 +70,4 @@ PCI-Passtrough deaktivieren:
 	
 xe vm-param-remove param-name=other-config param-key=pci uuid=4f65331f-61c5-8f87-6d1c-2fa401df6750
 ```
+
