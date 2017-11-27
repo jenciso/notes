@@ -364,6 +364,21 @@ save
 sudo service iptables-persistent save
 ```
 
+## ONLY FOR PUBLIC ADDRESS
+
+chmod +x /etc/rc.d/rc.local
+
+```
+[root@dcbvm090hm300 ~]# cat  /usr/local/bin/router.sh          
+#!/bin/bash
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+iptables -t nat -A POSTROUTING -m iprange ! --dst-range 10.0.0.1-10.255.255.255 -o eth0 -j MASQUERADE
+iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
+```
+
 ## PORT-FORWARDING
 
 ```sh
