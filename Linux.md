@@ -385,3 +385,27 @@ iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 sudo iptables -I FORWARD -p tcp -i eth0 -d <private LAN server IP> --dport <inbound port> -j ACCEPT
 sudo iptables -t nat -A PREROUTING -p tcp -i eth0 -d <Firewall Public IP> --dport <Inbound Port> -j DNAT --to-destination <private LAN server IP>:<Port where service runs>
 ```
+
+## Hyper-V - Centos - Selinux
+
+```
+cat > /tmp/hyperv-daemons.te << EOT
+module hyperv-daemons 1.0;
+require {
+ type hypervkvp_t;
+ type device_t;
+ type hypervvssd_t;
+ type ifconfig_t;
+ class chr_file { read write open };
+}
+allow hypervkvp_t device_t:chr_file { read write open };
+allow hypervvssd_t device_t:chr_file { read write open };
+allow ifconfig_t device_t:chr_file { read write open };
+EOT
+```
+
+```
+  checkmodule -M -m -o /tmp/hyperv-daemons.mod /tmp/hyperv-daemons.te
+  semodule_package -o /tmp/hyperv-daemons.pp -m /tmp/hyperv-daemons.mod
+  sudo semodule -s targeted -i /tmp/hyperv-daemons.pp
+```
