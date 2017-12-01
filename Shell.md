@@ -1,3 +1,8 @@
+## Remove Special characters from linux console
+
+https://www.linux.com/blog/linux-shell-tip-remove-files-names-contains-spaces-and-special-characters-such
+
+
 ## How test HTTPS URL with a given IP Address using CURL
 
 ```
