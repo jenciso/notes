@@ -1,3 +1,8 @@
+### Useful commands
+http://pavelmakhov.com/2017/03/useful-kafka-commands
+
+### Kafka Monitor
+https://github.com/linkedin/kafka-monitor
 
 ### Modify timeouts for slow networks
 
