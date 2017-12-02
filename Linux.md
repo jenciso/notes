@@ -409,3 +409,7 @@ EOT
   semodule_package -o /tmp/hyperv-daemons.pp -m /tmp/hyperv-daemons.mod
   sudo semodule -s targeted -i /tmp/hyperv-daemons.pp
 ```
+
+## Install Process of HyperV daemon in Centos
+
+https://access.redhat.com/solutions/2823991
