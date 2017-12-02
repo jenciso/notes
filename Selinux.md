@@ -1,3 +1,15 @@
+## Search audit logs
+
+All logs:
+```
+ausearch -m ALL
+```
+specific, like AVC, hyperv, etc
+
+```
+ausearch -m avc
+```
+
 ## Elemental packages to control selinux via ansible
 ```
 yum -y install libselinux-python
