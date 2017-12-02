@@ -413,3 +413,14 @@ EOT
 ## Install Process of HyperV daemon in Centos
 
 https://access.redhat.com/solutions/2823991
+
+## Script to install hyper-V using rpm
+https://gist.github.com/gildas/4b1c5e19fa8057d90d745c1754cb46b2#file-hyperv-integration-centos-sh-L14
+
+## Make permissive hyperv modules in selinux Config
+```
+yum -y install policycoreutils-python
+semanage permissive -a hypervvssd_t
+reboot
+```
+https://social.technet.microsoft.com/Forums/windows/en-US/cfe15e32-bfbc-47e0-8d2b-382a1293b9aa/vss-issues-with-centos-66-x64?forum=linuxintegrationservices
