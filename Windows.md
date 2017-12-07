@@ -1,3 +1,7 @@
+## WinRM
+http://www.hurryupandwait.io/blog/understanding-and-troubleshooting-winrm-connection-and-authentication-a-thrill-seekers-guide-to-adventure
+
+
 ## Change language in Linux System on windows 10 
 
 ```sh
