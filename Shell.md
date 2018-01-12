@@ -1,3 +1,9 @@
+## Execute commands without save in history file
+
+```
+export HISTFILE=/dev/null
+```
+
 ## Remove Special characters from linux console
 
 https://www.linux.com/blog/linux-shell-tip-remove-files-names-contains-spaces-and-special-characters-such
