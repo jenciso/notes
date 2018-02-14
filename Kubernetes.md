@@ -1,3 +1,9 @@
+## helm upgrade tiller
+
+```
+helm init --upgrade
+```
+
 ## Kubectl man page 
 https://kubernetes.io/docs/user-guide/kubectl/
 
