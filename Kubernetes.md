@@ -1,3 +1,32 @@
+## Add certificates SSL in ingress
+```
+kubectl create secret generic tls-dhparam --from-file=dhparam.pem -n kube-system
+kubectl create secret tls tls-certificate-wildcard-unicred --key e-unicred.com.br.key --cert e-unicred.com.br.crt -n kube-system
+```
+
+## Creating persistent volumes
+
+```
+export size=2Gi; for i in {1..2} ; 
+```
+```
+cat <<EOF | kubectl create -f - 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: gluster_$PVSIZE_$RANDOM
+ annotations:
+   volume.beta.kubernetes.io/storage-class: gluster-heketi
+spec:
+ accessModes:
+  - ReadWriteOnce
+ resources:
+   requests:
+     storage: $PVSIZE
+EOF
+; done
+```
+
 ## helm upgrade tiller
 
 ```
