@@ -1,3 +1,8 @@
+## Force delete pod 
+```
+kubectl delete pod --grace-period=0 --force --namespace <NAMESPACE> <PODNAME>
+```
+
 ## Add certificates SSL in ingress
 ```
 kubectl create secret generic tls-dhparam --from-file=dhparam.pem -n kube-system
