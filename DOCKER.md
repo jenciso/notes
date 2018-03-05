@@ -1,3 +1,9 @@
+## Stop and rm all containers
+```
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+```
+
 ## Delete and purge some specific container images   
 ```
 docker rmi $(docker images -q -f "dangling=true")
