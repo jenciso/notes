@@ -21,3 +21,6 @@ helm install --set accessKey=myaccesskey,secretKey=mysecretkey stable/minio
 helm update
 helm upgrade --force storage-realiza stable/minio 
 ``` 
+
+## Kubernetes
+https://docs.minio.io/docs/deploy-minio-on-kubernetes
