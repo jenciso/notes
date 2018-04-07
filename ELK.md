@@ -1,3 +1,8 @@
+## Load template
+```
+docker run --network=host docker.elastic.co/beats/filebeat:6.2.3 setup --template -E output.logstash.enabled=false -E 'setup.template.pattern="filebeat-*"'  -E 'output.elasticsearch.hosts=["127.0.0.1:9200"]' -E 'setup.template.name="filebeat"'
+```
+
 ## Some examples to get metrics for indices data
 
 ```
