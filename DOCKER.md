@@ -20,12 +20,12 @@ Verify
 ```
 [root@pachacutec asciinema-server]# docker-compose --version
 docker-compose version 1.16.1, build 6d1ac219
-[root@pachacutec asciinema-server]# 
+[root@pachacutec asciinema-server]#
 ```
 ## CLEAN all containers with state=Exited
 ```
 docker rm $(docker ps -a -q -f status=exited)
-```` 
+````
 
 ## DELETE all containers
 ```
@@ -82,12 +82,12 @@ docker run -it --cap-add net_raw --cap-add net_admin fedora  /bin/bash
 
 Permit strace in ubuntu
 ```
-docker run -i -t --cap-add=SYS_PTRACE --security-opt=apparmor:unconfined fedora  /bin/bash 
+docker run -i -t --cap-add=SYS_PTRACE --security-opt=apparmor:unconfined fedora /bin/bash 
 ```
 
 ## Clean Storage Docker
 
-Delete image without tag 
+Delete image without tag
 ```
 docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi
 ```
@@ -97,4 +97,3 @@ docker ps --filter status=dead --filter status=exited -aq | xargs docker rm -v
 ```
 
 More info, [here](https://lebkowski.name/docker-volumes/)
-
