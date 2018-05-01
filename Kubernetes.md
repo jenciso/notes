@@ -1,3 +1,15 @@
+## List pods sort by nodeName
+
+	kubectl get pods -o wide --sort-by="{.spec.nodeName}"
+
+## Get pods sort by restart count 
+
+	kubectl get pods --sort-by="{.status.containerStatuses[:1].restartCount}" --all-namespaces
+
+## View Node CPU request
+
+	kube describe nodes | grep -A 2 -e "^\\s*CPU Requests"
+
 ## Force delete pod 
 ```
 kubectl delete pod --grace-period=0 --force --namespace <NAMESPACE> <PODNAME>
