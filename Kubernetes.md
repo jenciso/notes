@@ -15,6 +15,11 @@
 kubectl delete pod --grace-period=0 --force --namespace <NAMESPACE> <PODNAME>
 ```
 
+### Delete pods with sleep
+``` 
+kubectl get pods --all-namespaces -o wide | grep <node_name> | awk '{ system("kubectl delete pod "$2" -n "$1" ; sleep 30") }'
+``` 
+
 ## Add certificates SSL in ingress
 ```
 kubectl create secret generic tls-dhparam --from-file=dhparam.pem -n kube-system
