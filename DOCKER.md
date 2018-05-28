@@ -1,3 +1,22 @@
+## Docker Compose
+
+If you've updated your code, you can do the build and reload in a single step with:
+	
+	docker-compose up -d --build
+
+For most specific 
+
+	docker-compose up -d --build worker
+
+For restart container
+
+	docker-compose restart worker
+
+or for set the time to wait for stop before killing the container (in seconds):
+
+	docker-compose restart -t 30 worker
+
+
 ## Stop and rm all containers
 ```
 docker stop $(docker ps -a -q)
