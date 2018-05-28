@@ -22,6 +22,9 @@ lvextend -L+99G /dev/vg-data/lv-data
 xfs_growfs  /dev/vg-data/lv-data
 ```
 
+or, for extend your lv space to 100% of vg, use:
+
+	lvextend -l 100%FREE /dev/vg-data/lv-data
 
 ## how to redirect output of systemd service to a file
 
