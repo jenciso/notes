@@ -109,7 +109,7 @@ kubectl get pods --all-namespaces -o wide | grep CrashLoopBackOff | awk '{ syste
 ## Encode base 64 User:Pass for basic authentication via curl
 
 ```
-jenciso@dellPE:~$ echo -n juan.enciso:33d48nc4d3d | base64                                                                             
+jenciso@dellPE:~$ echo -n juan.enciso:33d48n22312d | base64                                                                             
 anVhbi5lbmNpc286MzNkNDhuYzRkM2Q=
 jenciso@dellPE:~$ curl -s -k https://apik8s-dev.iplanet.work/version -H 'Authorization: Basic anVhbi5lbmNpc286MzNkNDhuYzRkM2Q='
 {
