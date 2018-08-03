@@ -1,3 +1,11 @@
+## Download one image using PWS
+
+```
+Invoke-WebRequest -Uri https://mirror.e-unicred.com.br/repo/iso/CentOS-7-x86_64-Minimal-1804.iso -Method Get -OutFile CentOS-7-x86_64-Minimal-1804.iso -PassThru -Proxy http://192.168.0.20:8080
+``` 
+Note: First, you have to launch IE and enable it
+
+
 ## WinRM
 http://www.hurryupandwait.io/blog/understanding-and-troubleshooting-winrm-connection-and-authentication-a-thrill-seekers-guide-to-adventure
 
