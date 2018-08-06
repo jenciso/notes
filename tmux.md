@@ -1,3 +1,9 @@
+## Kill terminal sleep or freezed
+
+``` 
+CTRL + x 
+```
+
 ## Change the buttom bar color
 
 ```
