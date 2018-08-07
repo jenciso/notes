@@ -1,3 +1,11 @@
+### Tmux
+
+Enable mouse: Edit `~/.tmux.conf` and put this line
+
+```
+set -g mouse on
+```
+
 ## Kill terminal sleep or freezed
 
 ``` 

@@ -1,10 +1,30 @@
-### Tmux
+## Mount using uuid 
 
-Enable mouse: Edit `~/.tmux.conf` and put this line
+first, you have to find it 
+
+Ex:
 
 ```
-set -g mouse on
+[root@ocpvm090lb121 ~]# ls -l /dev/disk/by-uuid/
+total 0
+lrwxrwxrwx. 1 root root  9 Jul 30 23:22 12bb5d8e-7627-4bd8-820e-8aa952ae8b84 -> ../../sdd
+lrwxrwxrwx. 1 root root  9 Jul 30 23:22 2018-07-30-23-22-03-00 -> ../../sr1
+lrwxrwxrwx. 1 root root 10 Aug  6 16:29 24c5adc2-3239-489e-b09b-0610de88d35d -> ../../dm-1
+lrwxrwxrwx. 1 root root 10 Jul 30 23:22 54762f23-1d72-46ff-89bf-a2d6e651a6f9 -> ../../dm-0
+lrwxrwxrwx. 1 root root  9 Jul 30 23:22 a067d397-b047-44c6-9cff-9a62d6388bc9 -> ../../sdb
+lrwxrwxrwx. 1 root root 10 Jul 30 23:22 bb65a208-3d3a-4c4e-a8da-3ca0d92c754e -> ../../sda1
+[root@ocpvm090lb121 ~]# 
 ```
+
+Editing the /etc/fstab, to mount /dev/sdd, add the line:
+
+	UUID=12bb5d8e-7627-4bd8-820e-8aa952ae8b84 /var/lib/etcd                            xfs   defaults 0 0
+
+Format it, and mount 
+
+	mkfs -t xfs /dev/sdd ; mount -a
+
+
 ## Extend partition size
 
 Ex. Using these values: 
