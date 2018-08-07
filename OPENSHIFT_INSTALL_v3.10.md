@@ -1,4 +1,4 @@
-### MASTER PROVISION
+## MASTER PROVISION
 
 Prepare the disks template
 
@@ -68,11 +68,13 @@ Same like a  node template
 
 ## DEPLOY BASTION
 
+Create the keys 
+
 ```
 ssh-keygen -N '' -f ~/.ssh/id_rsa
 
 ```
-Register
+Register your host deployment 
 
 
 Steps:
@@ -92,7 +94,7 @@ Verify
 	subscription-manager list --available --all
 
 
-Install 
+Install packages
 
 ```
 subscription-manager repos \
@@ -103,11 +105,13 @@ subscription-manager repos \
     --enable="rhel-7-server-ansible-2.4-rpms"
 ```
 
+Install ansible
+
 ```
 yum install openshift-ansible
 ``` 
 
-Modify your ansible.cfg
+Modify your /etc/ansible/ansible.cfg
 
 ```
 [defaults]
@@ -142,26 +146,27 @@ connect_interval = 1
 To modify the template
 
 
-Copying key:
+Copying key to host template (ip addr = 10.64.13.9)
 
 	ssh-copy-id 10.64.13.9
 
 
-COMMAND TO MODIFY THE TEMPLATE
+Create one host inventory
+
+To do for each host (lb, master and nodes) changing IPADDR and hostname:
+
 
 	ansible -m lineinfile -a "dest=/etc/sysconfig/network-scripts/ifcfg-eth0 regexp=^IPADDR\= line='IPADDR=10.64.13.131'" template
 	ansible -m copy -a "content='dcbvm090lb211.e-unicred.com.br\n' dest=/etc/hostname" template
 
 
 ## INSTALL PREREQ  - ALL HOSTS
-On host deployment (Bastion)
 
-Create another inventory
+From the host deployment (Bastion), create one directory
 
-`/etc/ansible/inventory/inventory-preinstall`
+        mkdir /etc/ansible/inventory
 
-
-With the following content:
+and create another inventory file `/etc/ansible/inventory/inventory-preinstall`with the following content:
 
 ``` 
 [lb]
@@ -212,5 +217,5 @@ iptables-services bridge-utils bash-completion kexec-tools sos psacct" \
 
 ansible -m shell -a "yum -y update" -i /etc/ansible/inventory/inventory-preinstall all
 
-ansible -m command -a "reboot" all
+ansible -m command -a "reboot" -i /etc/ansible/inventory/inventory-preinstall all
 ```
