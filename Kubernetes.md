@@ -1,3 +1,14 @@
+## Copying files using kubectl 
+
+From container to local directory 
+
+	kubectl cp realiza/storage-realiza-minio-cf59b68d8-sr6vw:/export \
+	/backup/storage-realiza-minio-cf59b68d8-sr6vw_20180808
+
+From local directory to container
+
+	kubectl cp public realiza/storage-realiza-minio-66449995b5-q2qt7:/export
+	
 ## BusyBox 
 
 	kubectl run -it busybox --image=radial/busyboxplus:curl  
