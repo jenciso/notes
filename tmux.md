@@ -1,4 +1,18 @@
-### Tmux
+## Tmux and asciinema
+
+If you wanna record your fancy tmux session with all windows and splits recorded, you can do it in the following way:
+
+    setup your tmux session (tmux new -s session-name, create windows, splits, start processes in them)
+    
+detach (prefix+d)
+
+    run asciinema -c "tmux attach -t session-name" rec 
+
+when you're finished, just detach the session again
+
+
+
+## Tmux
 
 Enable mouse: Edit `~/.tmux.conf` and put this line
 
