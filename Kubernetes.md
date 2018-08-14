@@ -1,6 +1,8 @@
 ## Show LivenessProbe
 
-	kubectl get deployment -n cadastro cooperativa-us -o json | jq -r .spec.template.spec.containers[].livenessProbe 
+Ex. 
+	kubectl get deployment -n cadastro cooperativa-us -o json | jq \
+	-r .spec.template.spec.containers[].livenessProbe 
 
 ## Copying files using kubectl 
 
