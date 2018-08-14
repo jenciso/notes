@@ -1,6 +1,7 @@
 ## Show LivenessProbe
 
 Ex. 
+
 	kubectl get deployment -n cadastro cooperativa-us -o json | jq \
 	-r .spec.template.spec.containers[].livenessProbe 
 
