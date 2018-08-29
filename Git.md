@@ -61,3 +61,20 @@ Example:
 ```
 git remote set-url origin git@github.com:jenciso/notes.git
 ```
+
+## Git Bash Prompt
+
+Step 1: Download
+
+```sh
+cd ~
+git clone https://github.com/jenciso/bash-git-prompt.git .bash-git-prompt --depth=1
+```
+
+Step 2: Add to the ~/.bashrc
+
+```sh
+GIT_PROMPT_ONLY_IN_REPO=1
+source ~/.bash-git-prompt/gitprompt.sh
+```
+
