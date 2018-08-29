@@ -116,3 +116,11 @@ docker ps --filter status=dead --filter status=exited -aq | xargs docker rm -v
 ```
 
 More info, [here](https://lebkowski.name/docker-volumes/)
+
+
+### Docker privileges 
+
+```
+sudo usermod -a -G docker $USER
+reboot
+```
