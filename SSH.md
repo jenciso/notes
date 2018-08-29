@@ -1,4 +1,18 @@
+## ssh_config - some examples
+
+```
+✔ 15:18:07 [lat3480i7] ~ $ cat ~/.ssh/config 
+Host github.com
+   Hostname ssh.github.com
+   Port 443
+
+Host *.e-unicred.com.br
+   User juan.enciso
+✔ 15:24:12 [lat3480i7] ~ $ 
+``` 
+
 ## SSH Tunnel - Local Port Forwarding 
+
 
 Example: Localhost:9000
 ```
