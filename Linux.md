@@ -1,3 +1,23 @@
+## Install pbcopy ubuntu 
+
+
+* Install xclip
+
+	sudo apt-get install xclip -y
+
+
+* Editar `~/.bashrc`: 
+
+	alias pbcopy='xclip -selection clipboard'
+	alias pbpaste='xclip -selection clipboard -o'
+
+* Save and test:
+
+	source ~/.bashrc
+	
+	date | pbcopy
+	pbpaste
+
 ## JQ
 
 http://blog.librato.com/posts/jq-json
