@@ -1,17 +1,17 @@
 ## Install pbcopy ubuntu 
 
 
-* Install xclip
+Install xclip
 
 	sudo apt-get install xclip -y
 
 
-* Editar `~/.bashrc`: 
+Editar `~/.bashrc`: 
 
 	alias pbcopy='xclip -selection clipboard'
 	alias pbpaste='xclip -selection clipboard -o'
 
-* Save and test:
+Save and test:
 
 	source ~/.bashrc
 	
