@@ -1,5 +1,14 @@
-## Install pbcopy ubuntu 
+## Check URL status
 
+
+	while true; do (echo -n "`date` --- "; curl -s https://api.infobip.com/status ; echo " RESULT: $?" ) ; done
+	
+	curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+	
+	curl ifconfig.co
+	
+
+## Install pbcopy ubuntu 
 
 Install xclip
 
