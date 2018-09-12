@@ -1,3 +1,9 @@
+## Sort by memory consume
+
+```
+kubectl top pod --all-namespaces | sort -nrk4 | head
+```
+
 ## Show LivenessProbe
 
 Ex. 
