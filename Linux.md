@@ -1,3 +1,15 @@
+## Sort Linux ‘ps’ output by memory (RAM), from high to low
+
+	ps aux --sort -rss
+	ps aux --sort rss
+
+Another examples:
+
+	ps aux --sort -pid
+
+
+Source: https://alvinalexander.com/linux/unix-linux-process-memory-sort-ps-command-cpu
+
 ## Check URL status
 
 
