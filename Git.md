@@ -1,3 +1,21 @@
+## Git Submodules 
+
+Add:
+
+    git submodule add https://github.com/<user>/rock rock
+
+Update:
+
+    git submodule update --init --recursive
+
+Clone a existent repo:
+
+    git clone --recursive <project url>
+  
+https://blog.github.com/2016-02-01-working-with-submodules/
+https://stackoverflow.com/questions/5828324/update-git-submodule-to-latest-commit-on-origin
+
+
 ## Changing Your Git Author Identity
 
 globally
