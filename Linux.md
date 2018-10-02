@@ -1,3 +1,9 @@
+## Process and task by memory sort 
+
+```
+ps -eo size,pid,user,command --sort -size | awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' |cut -d "" -f2 | cut -d "-" -f1
+```
+
 ## Sort Linux ‘ps’ output by memory (RAM), from high to low
 
 	ps aux --sort -rss
