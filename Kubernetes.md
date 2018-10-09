@@ -1,3 +1,46 @@
+## Installing Prometheus Operator
+
+1. Install Helm
+
+	https://github.com/kubernetes/helm
+
+2. Setup a clusterrolebinding for helm
+
+```
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+name: tiller
+namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+name: tiller
+roleRef:
+apiGroup: rbac.authorization.k8s.io
+kind: ClusterRole
+name: cluster-admin
+subjects:
+- kind: ServiceAccount
+name: tiller
+namespace: kube-system
+EOF
+```
+3. Create tiller account
+
+	helm init --service-account tiller
+
+
+4. Install it
+
+
+	helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
+	helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring
+	helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring
+
+
 ## List the pods order by memory consume
 
 ```
