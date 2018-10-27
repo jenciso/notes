@@ -47,7 +47,7 @@ E.g.:  intelbras-ocp311 -> load balancer
 virt-clone --connect qemu:///system --original-xml /var/lib/libvirt/images/openshift.xml --name intelbras-ocp311 --file /var/lib/libvirt/images/intelbras-ocp311.qcow2 --file /var/lib/libvirt/images/intelbras-ocp311-1.qcow2
 ``` 
 
-### Prepare bastion server
+## Prepare bastion server
 
 Create the ssh-key for root
 
@@ -91,4 +91,156 @@ Install ansible
 
 	yum install openshift-ansible
 	reboot
+
+
+Distribute the key in all hosts
+
+```
+for host in intelbras-ocp311.enciso.site \
+            intelbras-ocp321.enciso.site \
+            intelbras-ocp322.enciso.site \
+            intelbras-ocp323.enciso.site \
+            intelbras-ocp341.enciso.site \
+            intelbras-ocp342.enciso.site \
+            intelbras-ocp343.enciso.site \
+            intelbras-ocp351.enciso.site \
+            intelbras-ocp352.enciso.site; \
+            do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
+            done
+```
+
+Setup the /etc/ansible/ansible.cfg
+
+```
+[defaults]
+forks = 20
+host_key_checking = False
+roles_path = roles/
+gathering = smart
+remote_user = root
+private_key = ~/.ssh/id_rsa
+fact_caching = jsonfile
+fact_caching_connection = $HOME/ansible/facts
+fact_caching_timeout = 600
+log_path = $HOME/ansible.log
+nocows = 1
+callback_whitelist = profile_tasks
+
+[ssh_connection]
+ssh_args = -C -o ControlMaster=auto -o ControlPersist=900s -o GSSAPIAuthentication=no -o PreferredAuthentications=publickey
+control_path = %(directory)s/%%h-%%r
+pipelining = True
+timeout = 10
+
+[persistent_connection]
+connect_timeout = 30
+connect_retries = 30
+connect_interval = 1
+```
+
+Create a temporal inventory
+
+	mkdir /etc/ansible/inventory
+	
+and create another inventory file `/etc/ansible/inventory/inventory-preinstall` with this content:
+
+```
+[lb]
+intelbras-ocp311.enciso.site
+
+[master]
+intelbras-ocp321.enciso.site
+intelbras-ocp322.enciso.site
+intelbras-ocp323.enciso.site
+
+[node_infra]
+intelbras-ocp341.enciso.site
+intelbras-ocp342.enciso.site
+intelbras-ocp343.enciso.site
+
+[node_app]
+intelbras-ocp351.enciso.site
+intelbras-ocp352.enciso.site
+```
+
+## Prepare the others hosts from bastion server
+
+Using `ansible -m shell`
+
+
+	ansible -m shell -a "hostname" -i inventory-preinstall all
+
+	ansible -m shell -a "subscription-manager register --username=nsconsultores.juan --password=xxxx" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a 'subscription-manager refresh' -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "subscription-manager attach --pool=8a85f99a65c8c8a10166b25a19a303f3" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a 'subscription-manager repos --disable="*"' -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a 'subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.11-rpms" --enable="rhel-7-server-ansible-2.6-rpms"' -i /etc/ansible/inventory/inventory-preinstall all
+	
+
+Install prereq packages
+
+	ansible -m shell -a "yum -y install wget git net-tools bind-utils yum-utils \
+	iptables-services bridge-utils bash-completion kexec-tools sos psacct" \
+	-i /etc/ansible/inventory/inventory-preinstall all
+
+	ansible -m shell -a "yum -y update" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m command -a "reboot" -i /etc/ansible/inventory/inventory-preinstall all
+
+
+Install ansible
+
+	ansible -m shell -a "yum -y install openshift-ansible" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m command -a "reboot" -i /etc/ansible/inventory/inventory-preinstall all
+
+
+### Installing Docker 
+
+	ansible -m shell -a "yum install docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "rpm -V docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "docker version" -i /etc/ansible/inventory/inventory-preinstall all
+
+
+### Installing GlusterFS
+
+	yum install glusterfs-fuse
+	subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms
+	yum update glusterfs-fuse
+
+### Setting docker storage setup
+
+Create a file `docker-storage-setup` with the following content:
+
+```
+DEVS="/dev/vdb"
+VG="docker-vol"
+DATA_SIZE="95%VG"
+STORAGE_DRIVER=overlay2
+CONTAINER_ROOT_LV_NAME="dockerlv"
+CONTAINER_ROOT_LV_MOUNT_PATH="/var/lib/docker"
+```
+and copy it in all nodes
+
+```
+ansible -m copy -a "src=docker-storage-setup dest=/etc/sysconfig/" -i /etc/ansible/inventory/inventory-preinstall all
+```
+
+if you have another partition, you have to delete all them
+
+	dd if=/dev/zero of=/dev/vdb bs=512 count=1 conv=notrunc
+
+Another option is
+
+	wipefs -a /dev/vdb
+
+Apply the configuration to docker storage
+
+	ansible -m shell -a "docker-storage-setup" -i /etc/ansible/inventory/inventory-preinstall all 
+
+
+Enable docker
+
+	ansible -m shell -a "systemctl enable docker" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "systemctl start docker" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "systemctl is-active docker" -i /etc/ansible/inventory/inventory-preinstall all
+
 
