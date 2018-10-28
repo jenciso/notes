@@ -104,7 +104,8 @@ for host in intelbras-ocp311.enciso.site \
             intelbras-ocp342.enciso.site \
             intelbras-ocp343.enciso.site \
             intelbras-ocp351.enciso.site \
-            intelbras-ocp352.enciso.site; \
+            intelbras-ocp352.enciso.site \
+            intelbras-ocp353.enciso.site; \
             do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
             done
 ```
@@ -161,6 +162,7 @@ intelbras-ocp343.enciso.site
 [node_app]
 intelbras-ocp351.enciso.site
 intelbras-ocp352.enciso.site
+intelbras-ocp353.enciso.site
 ```
 
 ## Prepare the others hosts from bastion server
@@ -195,16 +197,17 @@ Install ansible
 
 ### Installing Docker 
 
-	ansible -m shell -a "yum install docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "yum -y install docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
 	ansible -m shell -a "rpm -V docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
 	ansible -m shell -a "docker version" -i /etc/ansible/inventory/inventory-preinstall all
 
 
 ### Installing GlusterFS
 
-	yum install glusterfs-fuse
-	subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms
-	yum update glusterfs-fuse
+	ansible -m shell -a "yum -y install glusterfs-fuse" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "yum -y update glusterfs-fuse" -i /etc/ansible/inventory/inventory-preinstall all
+
 
 ### Setting docker storage setup
 
