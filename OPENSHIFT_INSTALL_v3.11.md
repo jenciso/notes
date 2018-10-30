@@ -216,10 +216,11 @@ Create a file `docker-storage-setup` with the following content:
 ```
 DEVS="/dev/vdb"
 VG="docker-vol"
-DATA_SIZE="95%VG"
+DATA_SIZE="100%VG"
 STORAGE_DRIVER=overlay2
 CONTAINER_ROOT_LV_NAME="dockerlv"
 CONTAINER_ROOT_LV_MOUNT_PATH="/var/lib/docker"
+CONTAINER_ROOT_LV_SIZE=100%FREE
 ```
 and copy it in all nodes
 
