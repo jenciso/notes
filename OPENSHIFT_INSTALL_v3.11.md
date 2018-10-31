@@ -248,3 +248,10 @@ Enable docker
 	ansible -m shell -a "systemctl is-active docker" -i /etc/ansible/inventory/inventory-preinstall all
 
 
+Config your docker credential in all the hosts
+
+	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /root/inventory.single nodes
+	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i /root/inventory.single nodes
+	ansible -m shell -a "systemctl restart docker" -i /root/inventory.single nodes
+
+
