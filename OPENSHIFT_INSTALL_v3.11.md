@@ -309,6 +309,12 @@ backend router443
     server     infra3  soo-opshift-infra-03.intelbras.local:443 check
 ```
 
+Restart haproxy
+
+```
+systemctl restart haproxy
+```
+
 Create iptables rules
 
 ```
@@ -318,6 +324,7 @@ service iptables save
 ```
 
 * Given access as Admin
+
 ```
 oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
 oc adm policy add-cluster-role-to-user cluster-admin ma053293
