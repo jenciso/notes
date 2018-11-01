@@ -251,16 +251,22 @@ Enable docker
 Config your docker credential in all the hosts
 
 	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-        ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
 	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i /root/inventory.single nodes
 	ansible -m shell -a "systemctl restart docker" -i /root/inventory.single nodes
 
 
+### Deploy install
+
+	cd /usr/share/ansible/openshift-ansible
+	ansible-playbook -i /root/inventory.redhat playbooks/prerequisites.yml -vv
+	ansible-playbook -i /root/inventory.redhat playbooks/deploy_cluster.yml -vv
 
 
-### Addons
+### Post installation
 
 * Given access as Admin
-
-	oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
-	oc adm policy add-cluster-role-to-user cluster-admin ma053293
+```
+oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
+oc adm policy add-cluster-role-to-user cluster-admin ma053293
+```
