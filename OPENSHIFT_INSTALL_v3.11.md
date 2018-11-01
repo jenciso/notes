@@ -256,6 +256,18 @@ Config your docker credential in all the hosts
 	ansible -m shell -a "systemctl restart docker" -i /root/inventory.single nodes
 
 
+Create ssl-certificates via sslfree.com
+
+	mkdir -p /opt/ssl-certs/certificates-openshift.intelbras.com.br
+	mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
+
+Unzip
+
+	cd /opt/ssl-certs/certificates-openshift.intelbras.com.br
+	unzip sslforfree.zip
+        mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
+        unzip sslforfree.zip
+
 ### Deploy install
 
 	cd /usr/share/ansible/openshift-ansible
