@@ -277,6 +277,46 @@ Unzip
 
 ### Post installation
 
+* Create haproxy config for router
+
+Into `/etc/haproxy/haproxy.cfg` add the following block
+
+```
+frontend main_router_80
+    bind *:80
+    default_backend router80
+    mode tcp
+    option tcplog
+
+backend router80
+    balance source
+    mode tcp
+    server     infra1  sjo-opshift-infra-01.intelbras.local:80 check
+    server     infra2  soo-opshift-infra-02.intelbras.local:80 check
+    server     infra3  soo-opshift-infra-03.intelbras.local:80 check
+
+frontend main_router_443
+    bind *:443
+    default_backend router443
+    mode tcp
+    option tcplog
+
+backend router443
+    balance source
+    mode tcp
+    server     infra1  sjo-opshift-infra-01.intelbras.local:443 check
+    server     infra2  soo-opshift-infra-02.intelbras.local:443 check
+    server     infra3  soo-opshift-infra-03.intelbras.local:443 check
+```
+
+Create iptables rules
+
+```
+iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT 
+iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT 
+service iptables save
+```
+
 * Given access as Admin
 ```
 oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
