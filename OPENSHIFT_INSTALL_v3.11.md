@@ -355,3 +355,26 @@ service iptables save
 oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
 oc adm policy add-cluster-role-to-user cluster-admin ma053293
 ```
+
+
+## ADD NEW NODES
+
+Modify the inventory file
+
+```
+[OSEv3:children]
+new_nodes
+...
+
+[new_nodes]
+intelbras-ocp341.enciso.site  ipv4addr=192.168.122.41 openshift_node_group_name='node-config-compute'
+```
+
+Download images 
+
+	docker pull registry.access.redhat.com/openshift3/ose-node:v3.11.16
+	docker pull registry.access.redhat.com/openshift3/ose-pod:v3.11.16
+
+
+Source: [Add nodes](https://docs.openshift.com/container-platform/3.11/install_config/adding_hosts_to_existing_cluster.html)
+
