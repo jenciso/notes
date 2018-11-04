@@ -268,6 +268,19 @@ Unzip
         mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
         unzip sslforfree.zip
 
+Convert to Unix type
+
+	cd /opt/ssl-certs/certificates-openshift.intelbras.com.br
+	awk '{ sub("\r$", ""); print }' private.key > openshift_private.key
+	awk '{ sub("\r$", ""); print }' certificate.crt > openshift_certificate.crt
+	awk '{ sub("\r$", ""); print }' ca_bundle.crt > openshift_ca_bundle.crt
+
+	cd /opt/ssl-certs/certificates-apps.intelbras.com.br
+	awk '{ sub("\r$", ""); print }' private.key > apps_private.key
+	awk '{ sub("\r$", ""); print }' certificate.crt > apps_certificate.crt
+	awk '{ sub("\r$", ""); print }' ca_bundle.crt > apps_ca_bundle.crt
+
+
 ### Deploy install
 
 	cd /usr/share/ansible/openshift-ansible
