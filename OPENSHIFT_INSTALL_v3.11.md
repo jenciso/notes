@@ -265,8 +265,8 @@ Unzip
 
 	cd /opt/ssl-certs/certificates-openshift.intelbras.com.br
 	unzip sslforfree.zip
-        mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
-        unzip sslforfree.zip
+	mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
+	unzip sslforfree.zip
 
 Convert to Unix type
 
@@ -281,9 +281,15 @@ Convert to Unix type
 	awk '{ sub("\r$", ""); print }' ca_bundle.crt > apps_ca_bundle.crt
 
 
+### Install aditional packages 
+
+	ansible -m shell -a "yum install -y dnsmasq chrony ntp" -i /root/inventory.single nodes
+
+
 ### Deploy install
 
 	cd /usr/share/ansible/openshift-ansible
+
 	ansible-playbook -i /root/inventory.redhat playbooks/prerequisites.yml -vv
 	ansible-playbook -i /root/inventory.redhat playbooks/deploy_cluster.yml -vv
 
