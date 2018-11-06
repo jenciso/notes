@@ -69,7 +69,7 @@ chmod 400 ~/.ssh/config
 
 Register your redhat server
 
-	subscription-manager register --username=<user_name> --password=<password>
+	subscription-manager register --username=<user_name> --password=<password> --force
 	subscription-manager refresh
 	subscription-manager list --available --matches '*OpenShift*'
 	subscription-manager attach --pool=<pool_id>
@@ -84,8 +84,7 @@ Register your redhat server
 Install pre-req packages
 
 	yum install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
-	yum -y update
-	reboot
+	yum -y update	
 
 Install ansible
 
