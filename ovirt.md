@@ -25,3 +25,14 @@ Based from
 ```
 https://www.youtube.com/watch?v=Pasz-lv3gTY
 ```
+## Upload ISO images
+
+Create a `/iso`directory 
+
+	mkdir /iso
+
+Upload the image file `.iso` into `/iso` and execute this command: (RedHat iso)
+
+	engine-iso-uploader -i ISO_DOMAIN upload /iso/rhel-server-7.6-x86_64-dvd.iso --insecure
+
+
