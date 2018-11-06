@@ -288,8 +288,8 @@ Convert to Unix type
 
 ### Download some docker images
 	
-	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11" -i /root/inventory.single nodes
-	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11" -i /root/inventory.single nodes
+	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11.16" -i /root/inventory.single nodes
+	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16" -i /root/inventory.single nodes
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i /root/inventory.single nodes
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i /root/inventory.single nodes
 
@@ -375,8 +375,8 @@ intelbras-ocp341.enciso.site  ipv4addr=192.168.122.41 openshift_node_group_name=
 
 Download images 
 
-	docker pull registry.access.redhat.com/openshift3/ose-node:v3.11.16
-	docker pull registry.access.redhat.com/openshift3/ose-pod:v3.11.16
+	docker pull registry.redhat.io/openshift3/ose-node:v3.11.16
+	docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16
 
 
 Source: [Add nodes](https://docs.openshift.com/container-platform/3.11/install_config/adding_hosts_to_existing_cluster.html)
