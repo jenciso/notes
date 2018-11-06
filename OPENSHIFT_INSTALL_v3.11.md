@@ -286,7 +286,7 @@ Convert to Unix type
 
 	ansible -m shell -a "yum install -y dnsmasq chrony ntp" -i /root/inventory.single nodes
 
-### Download some dcoker images
+### Download some docker images
 	
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11" -i /root/inventory.single nodes
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11" -i /root/inventory.single nodes
