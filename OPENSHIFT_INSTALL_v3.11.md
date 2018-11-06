@@ -2,7 +2,7 @@
 
 ### Templates 
 
-Create a VM with RedHat 7.5 and 2 HD's (20GB each one)
+Create a VM with RedHat 7.6 and 2 HD's (20GB each one)
 - 20GB to operating system
 - 20GB LVM docker partition
 
@@ -251,8 +251,8 @@ Config your docker credential in all the hosts
 
 	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
 	ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-        ansible -m shell -a "docker login https://registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-        ansible -m shell -a "docker login https://registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "docker login https://registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "docker login https://registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
 	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i /root/inventory.single nodes
 	ansible -m shell -a "systemctl restart docker" -i /root/inventory.single nodes
 
@@ -353,6 +353,9 @@ service iptables save
 
 ```
 oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
+```
+or 
+```
 oc adm policy add-cluster-role-to-user cluster-admin ma053293
 ```
 
