@@ -36,3 +36,7 @@ Upload the image file `.iso` into `/iso` and execute this command: (RedHat iso)
 	engine-iso-uploader -i ISO_DOMAIN upload /iso/rhel-server-7.6-x86_64-dvd.iso --insecure
 
 
+
+## Restore from snapshot
+
+https://www.ovirt.org/documentation/user-guide/user-guide/#using-a-snapshot-to-restore-a-virtual-machine
