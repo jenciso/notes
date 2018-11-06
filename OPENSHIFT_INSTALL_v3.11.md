@@ -88,7 +88,7 @@ Install pre-req packages
 
 Install ansible
 
-	yum install openshift-ansible
+	yum -y install openshift-ansible
 	reboot
 
 
