@@ -1,3 +1,9 @@
+## Git Finding diff between current and last version?
+
+```
+git diff HEAD^ HEAD
+```
+
 ## Git Submodules 
 
 Add:
