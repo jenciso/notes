@@ -1,11 +1,13 @@
-## STEPS TO INSTALL OPENSHIFT
+## OPENSHIFT INSTALLATION v3.11
 
-### Templates 
+### Creating templates in kvm
 
 Create a VM with RedHat 7.6 with 2 HD's
+
+```
 - 50GB to operating system
 - 40GB docker partition
-
+```
 
 [Here](http://ostolc.org/kvm-clone-guests-from-template-image.html) is how you could create a template using KVM libvirt
 
@@ -265,7 +267,9 @@ Convert to Unix type
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i inventory.pre nodes
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i inventory.pre nodes
 
-### Make a inventory.redhat file like this
+### Make a inventory.redhat 
+
+Create a inventory file like [this](https://raw.githubusercontent.com/jenciso/notes/master/inventory.redhat)
 
 
 ### Deploy install
@@ -292,9 +296,9 @@ frontend main_router_80
 backend router80
     balance source
     mode tcp
-    server     infra1  sjo-opshift-infra-01.intelbras.local:80 check
-    server     infra2  soo-opshift-infra-02.intelbras.local:80 check
-    server     infra3  soo-opshift-infra-03.intelbras.local:80 check
+    server     infra1  ocpvm090lb131.ocp.enciso.site:80 check
+    server     infra2  ocpvm090lb132.ocp.enciso.site:80 check
+    server     infra3  ocpvm090lb133.ocp.enciso.site:80 check
 
 frontend main_router_443
     bind *:443
@@ -305,9 +309,9 @@ frontend main_router_443
 backend router443
     balance source
     mode tcp
-    server     infra1  sjo-opshift-infra-01.intelbras.local:443 check
-    server     infra2  soo-opshift-infra-02.intelbras.local:443 check
-    server     infra3  soo-opshift-infra-03.intelbras.local:443 check
+    server     infra1  ocpvm090lb131.ocp.enciso.site:443 check
+    server     infra2  ocpvm090lb132.ocp.enciso.site:443 check
+    server     infra3  ocpvm090lb133.ocp.enciso.site:443 check
 ```
 
 Restart haproxy
@@ -345,7 +349,7 @@ new_nodes
 ...
 
 [new_nodes]
-intelbras-ocp341.enciso.site  ipv4addr=192.168.122.41 openshift_node_group_name='node-config-compute'
+ocpvm090lb143.ocp.enciso.site  ipv4addr=10.64.13.123 openshift_node_group_name='node-config-compute'
 ```
 
 Download images 
