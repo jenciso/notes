@@ -221,10 +221,10 @@ sa_pass = 'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJhZTJlNjNkOGU4ZTM0N2E5YTkyNDI0MGI0Y2Zj
 
 Config your docker credential in all the hosts
 
-	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i inventory.pre all
-	ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i inventory.pre all
-	ansible -m shell -a "docker login https://registry.redhat.io -u nsconsultores.juan -p xxxxx" -i inventory.pre all
-	ansible -m shell -a "docker login https://registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i inventory.pre all
+	ansible -m shell -a "docker login registry.redhat.io -u '<sa_user>'-p '<sa_pass>'" -i inventory.pre all
+	ansible -m shell -a "docker login registry.access.redhat.com -u '<sa_user>'-p '<sa_pass>'" -i inventory.pre all
+	ansible -m shell -a "docker login https://registry.redhat.io -u '<sa_user>'-p '<sa_pass>'" -i inventory.pre all
+	ansible -m shell -a "docker login https://registry.access.redhat.com -u '<sa_user>'-p '<sa_pass>'" -i inventory.pre all
 	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i inventory.pre all
 	ansible -m shell -a "systemctl restart docker" -i inventory.pre all
 
@@ -264,6 +264,9 @@ Convert to Unix type
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16" -i inventory.pre nodes
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i inventory.pre nodes
 	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i inventory.pre nodes
+
+### Make a inventory.redhat file like this
+
 
 ### Deploy install
 
