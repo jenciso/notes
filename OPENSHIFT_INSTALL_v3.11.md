@@ -424,11 +424,13 @@ openshift_excluder : Install docker excluder - yum -----------------------------
 
 ## Troubleshooting
 
+### Cassandra
+
 If you have problems with cassandra pods in the namespace openshift-infra. You could delete the replication controllers
 and recreate all them using this command
 
-``I 
-ansible-playbook -i inventory.redhat playbooks/openshift-metrics/config.yml -vv
+```
+ansible-playbook -i /root/inventory.redhat playbooks/openshift-metrics/config.yml -vv
 ```
 
 
