@@ -210,6 +210,14 @@ Enable docker
 	ansible -m shell -a "systemctl start docker" -i inventory.pre all
 	ansible -m shell -a "systemctl is-active docker" -i inventory.pre all
 
+Go to https://registry.redhat.io and login with your user/pass to create a service account
+
+Ex:
+```
+sa_user = '12145255|ocpdemo'
+sa_pass = 'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJhZTJlNjNkOGU4ZTM0N2E5YTkyNDI0MGI0Y2ZjYWNkYSJ9.L7t22AOMHDzz5W5Wu7NoPY-7eyljCdT9sCBvuVvHGxgO0nn1r4d3aigQwchMP1l93zLc9jb9twqCTfJVX5YxbETOMpkMBBnDJYjl-UF84TjjrPU5L8B4JcvjNj67B1a2iAz28_M1HCp78WwVsTylt8985NVKrX-kyJIDJy8Z90Ufadm9alsRAE-0hwbwNM8tiiy0gA57AAYn9-HwDkKpCOEWjTPg9OjXCxBpwopO7iGj5V5dnJNmZOcZPvrqfi9uj522lH05HY3EdLrFWHYIII9d4t5xNpcaqSIEsDkGQ9cNk0gOUSvvBNlRNK9EI1k5O8Guo9ev6L4tuYNMAvJxUzBFuAJejsvCVsyFG74D3lbLpZuoSbNi6slelwAJas9aZuB-itytiJzUZGN9KhkCXNfTd_3aEq-6OFUcahNbn4c2Wq1IHArzOboVlK9bVrSmsWj4ePQCfIL6nFmXXPzOXEOxgRiR2Rjth-aB2RieqEBabw5KvOAKDfHSQYND32X9VOwy2s0831T-oOIfLnW8iTqtS8dGP3ZzQF4LiWvvWt2kEVNhi_NzT2XD45-fi_qpvcfeHHtroIPX6HiHpi7hTGuenP741GDO2jz-_TS98J2C4D_TuACWiqrkPwvx-eeYQyxXcBOPtgAJxY_amHmP_9AYUgv6I3ZziVZqoL7Z4YU'
+```
+
 
 Config your docker credential in all the hosts
 
