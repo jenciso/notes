@@ -2,9 +2,9 @@
 
 ### Templates 
 
-Create a VM with RedHat 7.6 and 2 HD's (20GB each one)
-- 20GB to operating system
-- 20GB LVM docker partition
+Create a VM with RedHat 7.6 with 2 HD's
+- 50GB to operating system
+- 40GB docker partition
 
 
 [Here](http://ostolc.org/kvm-clone-guests-from-template-image.html) is how you could create a template using KVM libvirt
@@ -30,21 +30,21 @@ vim openshift.xml
 virt-sysprep -a openshift.qcow2
 ``` 
 
-Create 9 VM's
+Create 10 VM's
 
 ```
-1 x bastion
-1 x load balancer
-3 x node master
-3 x node infra
-2 x node apps
+1 x bastion 		(1GB 4vCPU's)
+1 x load balancer 	(2GB 2vCPU's)
+3 x node master 	(4GB 4vCPU's)
+3 x node infra 		(16GB 4vCPU's)
+2 x node apps 		(8GB 4vCPU's)
 ```
 
 use vir-clone to create each server from template `openshift`
-E.g.:  intelbras-ocp311 -> load balancer
+E.g.:  ocpvm090lb111 -> load balancer
 
 ``` 
-virt-clone --connect qemu:///system --original-xml /var/lib/libvirt/images/openshift.xml --name intelbras-ocp311 --file /var/lib/libvirt/images/intelbras-ocp311.qcow2 --file /var/lib/libvirt/images/intelbras-ocp311-1.qcow2
+virt-clone --connect qemu:///system --original-xml /var/lib/libvirt/images/openshift.xml --name ocpvm090lb111 --file /var/lib/libvirt/images/ocpvm090lb111.qcow2 --file /var/lib/libvirt/images/ocpvm090lb111-1.qcow2
 ``` 
 
 ## Prepare bastion server
@@ -151,9 +151,7 @@ Install prereq packages
 	-i inventory.pre all
 	
 	ansible -m shell -a "yum -y update" -i inventory.pre all
-	ansible -m command -a "reboot" -i inventory.pre all
-
-
+	
 Install ansible
 
 	ansible -m shell -a "yum -y install openshift-ansible" -i inventory.pre all
@@ -225,24 +223,24 @@ Config your docker credential in all the hosts
 
 Create ssl-certificates via sslfree.com
 
-	mkdir -p /opt/ssl-certs/certificates-openshift.intelbras.com.br
-	mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
+	mkdir -p /opt/openshift/ssl-certs/apps
+	mkdir -p /opt/openshift/ssl-certs/console
 
 Unzip
 
-	cd /opt/ssl-certs/certificates-openshift.intelbras.com.br
+	cd /opt/openshift/ssl-certs/apps
 	unzip sslforfree.zip
-	mkdir -p /opt/ssl-certs/certificates-apps.intelbras.com.br
+	cd /opt/openshift/ssl-certs/console
 	unzip sslforfree.zip
 
 Convert to Unix type
 
-	cd /opt/ssl-certs/certificates-openshift.intelbras.com.br
+	cd /opt/openshift/ssl-certs/console
 	awk '{ sub("\r$", ""); print }' private.key > openshift_private.key
 	awk '{ sub("\r$", ""); print }' certificate.crt > openshift_certificate.crt
 	awk '{ sub("\r$", ""); print }' ca_bundle.crt > openshift_ca_bundle.crt
 
-	cd /opt/ssl-certs/certificates-apps.intelbras.com.br
+	cd /opt/openshift/ssl-certs/apps
 	awk '{ sub("\r$", ""); print }' private.key > apps_private.key
 	awk '{ sub("\r$", ""); print }' certificate.crt > apps_certificate.crt
 	awk '{ sub("\r$", ""); print }' ca_bundle.crt > apps_ca_bundle.crt
@@ -250,14 +248,14 @@ Convert to Unix type
 
 ### Install aditional packages 
 
-	ansible -m shell -a "yum install -y dnsmasq chrony ntp" -i /root/inventory.single nodes
+	ansible -m shell -a "yum install -y dnsmasq chrony ntp" -i inventory.pre all
 
 ### Download some docker images
 	
-	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11.16" -i /root/inventory.single nodes
-	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16" -i /root/inventory.single nodes
-	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i /root/inventory.single nodes
-	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i /root/inventory.single nodes
+	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11.16" -i inventory.pre nodes
+	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16" -i inventory.pre nodes
+	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i inventory.pre nodes
+	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i inventory.pre nodes
 
 ### Deploy install
 
