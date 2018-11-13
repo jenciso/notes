@@ -341,11 +341,11 @@ service iptables save
 * Given access as Admin
 
 ```
-oc create clusterrolebinding admin-role-binding --clusterrole=cluster-admin --user=ns.juan
+oc create clusterrolebinding juan.enciso-admin-role-binding --clusterrole=cluster-admin --user=juan.enciso
 ```
 or 
 ```
-oc adm policy add-cluster-role-to-user cluster-admin ma053293
+oc adm policy add-cluster-role-to-user cluster-admin juan.enciso
 ```
 
 
