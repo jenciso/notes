@@ -95,16 +95,16 @@ Install ansible
 Distribute the key in all hosts
 
 ```
-for host in intelbras-ocp311.enciso.site \
-            intelbras-ocp321.enciso.site \
-            intelbras-ocp322.enciso.site \
-            intelbras-ocp323.enciso.site \
-            intelbras-ocp341.enciso.site \
-            intelbras-ocp342.enciso.site \
-            intelbras-ocp343.enciso.site \
-            intelbras-ocp351.enciso.site \
-            intelbras-ocp352.enciso.site \
-            intelbras-ocp353.enciso.site; \
+for host in ocpvm090lb111.enciso.site \
+            ocpvm090lb121.enciso.site \
+            ocpvm090lb122.enciso.site \
+            ocpvm090lb123.enciso.site \
+            ocpvm090lb141.enciso.site \
+            ocpvm090lb142.enciso.site \
+            ocpvm090lb143.enciso.site \
+            ocpvm090lb151.enciso.site \
+            ocpvm090lb152.enciso.site \
+            ocpvm090lb153.enciso.site; \
             do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
             done
 ```
