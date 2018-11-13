@@ -108,35 +108,6 @@ for host in ocpvm090lb111.enciso.site \
             do ssh-copy-id -i ~/.ssh/id_rsa.pub $host; \
             done
 ```
-
-Setup the /etc/ansible/ansible.cfg
-
-```
-[defaults]
-forks = 20
-host_key_checking = False
-roles_path = roles/
-gathering = smart
-remote_user = root
-private_key = ~/.ssh/id_rsa
-fact_caching = jsonfile
-fact_caching_connection = $HOME/ansible/facts
-fact_caching_timeout = 600
-log_path = $HOME/ansible.log
-nocows = 1
-callback_whitelist = profile_tasks
-
-[ssh_connection]
-ssh_args = -C -o ControlMaster=auto -o ControlPersist=900s -o GSSAPIAuthentication=no -o PreferredAuthentications=publickey
-control_path = %(directory)s/%%h-%%r
-pipelining = True
-timeout = 10
-
-[persistent_connection]
-connect_timeout = 30
-connect_retries = 30
-connect_interval = 1
-```
 	
 Create an inventory file `inventory.pre` in your home directory ( ~/ ) with this content:
 
@@ -219,7 +190,7 @@ CONTAINER_ROOT_LV_SIZE=100%FREE
 and copy it in all nodes
 
 ```
-ansible -m copy -a "src=docker-storage-setup dest=/etc/sysconfig/" -i /etc/ansible/inventory/inventory-preinstall all
+ansible -m copy -a "src=docker-storage-setup dest=/etc/sysconfig/" -i inventory.pre all
 ```
 
 if you have another partition, you have to delete all them
@@ -232,24 +203,24 @@ Another option is
 
 Apply the configuration to docker storage
 
-	ansible -m shell -a "docker-storage-setup" -i /etc/ansible/inventory/inventory-preinstall all 
+	ansible -m shell -a "docker-storage-setup" -i inventory.pre all
 
 
 Enable docker
 
-	ansible -m shell -a "systemctl enable docker" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "systemctl start docker" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "systemctl is-active docker" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "systemctl enable docker" -i inventory.pre all
+	ansible -m shell -a "systemctl start docker" -i inventory.pre all
+	ansible -m shell -a "systemctl is-active docker" -i inventory.pre all
 
 
 Config your docker credential in all the hosts
 
-	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "docker login https://registry.redhat.io -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "docker login https://registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i /root/inventory.single nodes
-	ansible -m shell -a "systemctl restart docker" -i /root/inventory.single nodes
+	ansible -m shell -a "docker login registry.redhat.io -u nsconsultores.juan -p xxxxx" -i inventory.pre all
+	ansible -m shell -a "docker login registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i inventory.pre all
+	ansible -m shell -a "docker login https://registry.redhat.io -u nsconsultores.juan -p xxxxx" -i inventory.pre all
+	ansible -m shell -a "docker login https://registry.access.redhat.com -u nsconsultores.juan -p xxxxx" -i inventory.pre all
+	ansible -m shell -a "mkdir /var/lib/origin/; cp -pr ~/.docker /var/lib/origin/" -i inventory.pre all
+	ansible -m shell -a "systemctl restart docker" -i inventory.pre all
 
 
 Create ssl-certificates via sslfree.com
