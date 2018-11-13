@@ -5,11 +5,18 @@
 Create a VM with RedHat 7.6 with 2 HD's
 
 ```
-- 50GB to operating system
-- 40GB docker partition
+- 50GB to operating system (/dev/xvda)
+- 40GB docker partition (/dev/xvdb)
+```
+
+the nodes infra should have a additional disk to glusterfs
+
+```
+- 200GB glusterfs (/dev/xvdc)
 ```
 
 [Here](http://ostolc.org/kvm-clone-guests-from-template-image.html) is how you could create a template using KVM libvirt
+
 
 E.g.  Creating template named `openshift`
 
