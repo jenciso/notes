@@ -426,9 +426,17 @@ openshift_excluder : Install docker excluder - yum -----------------------------
 
 ### Cassandra
 
-If you have problems with cassandra pods in the namespace openshift-infra. You could delete the replication controllers
-and recreate all them using this command
+If you have problems with cassandra pods in the namespace openshift-infra. 
 
+You could delete the replication controllers and pvc
+``` 
+oc delete rc -n openshift-infra hawkular-cassandra-1 
+oc delete rc -n openshift-infra hawkular-metrics
+oc delete rc -n openshift-infra heapster
+oc get pvc -n openshift-infra 
+oc delete pvc -n openshift-infra metrics-cassandra-1
+```
+and recreate all them using this command
 ```
 ansible-playbook -i /root/inventory.redhat playbooks/openshift-metrics/config.yml -vv
 ```
