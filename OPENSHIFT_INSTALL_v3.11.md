@@ -137,75 +137,70 @@ connect_timeout = 30
 connect_retries = 30
 connect_interval = 1
 ```
-
-Create a temporal inventory
-
-	mkdir /etc/ansible/inventory
 	
-and create another inventory file `/etc/ansible/inventory/inventory-preinstall` with this content:
+Create an inventory file `inventory.pre` in your home directory ( ~/ ) with this content:
 
 ```
 [lb]
-intelbras-ocp311.enciso.site
+ocpvm090lb111.ocp.enciso.site
 
-[master]
-intelbras-ocp321.enciso.site
-intelbras-ocp322.enciso.site
-intelbras-ocp323.enciso.site
-
-[node_infra]
-intelbras-ocp341.enciso.site
-intelbras-ocp342.enciso.site
-intelbras-ocp343.enciso.site
-
-[node_app]
-intelbras-ocp351.enciso.site
-intelbras-ocp352.enciso.site
-intelbras-ocp353.enciso.site
+[nodes]
+ocpvm090lb121.ocp.enciso.site
+ocpvm090lb122.ocp.enciso.site
+ocpvm090lb123.ocp.enciso.site
+ocpvm090lb131.ocp.enciso.site
+ocpvm090lb132.ocp.enciso.site
+ocpvm090lb133.ocp.enciso.site
+ocpvm090lb141.ocp.enciso.site
+ocpvm090lb142.ocp.enciso.site
 ```
 
 ## Prepare the others hosts from bastion server
 
 Using `ansible -m shell`
 
+	cd ~/
+	ansible -m shell -a "hostname" -i inventory.pre all
 
-	ansible -m shell -a "hostname" -i inventory-preinstall all
+	ansible -m shell -a "subscription-manager register --username=nsconsultores.juan --password=xxxx" -i inventory.pre all
+	ansible -m shell -a 'subscription-manager refresh' -i inventory.pre all
+	ansible -m shell -a "subscription-manager attach --pool=8a85f99b65c8c8f10166e56054bc3e47" -i inventory.pre all
+	ansible -m shell -a 'subscription-manager repos --disable="*"' -i inventory.pre all
 
-	ansible -m shell -a "subscription-manager register --username=nsconsultores.juan --password=xxxx" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a 'subscription-manager refresh' -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "subscription-manager attach --pool=8a85f99a65c8c8a10166b25a19a303f3" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a 'subscription-manager repos --disable="*"' -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a 'subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.11-rpms" --enable="rhel-7-server-ansible-2.6-rpms"' -i /etc/ansible/inventory/inventory-preinstall all
+
+	ansible -m shell -a 'subscription-manager repos --enable="rhel-7-server-rpms" \
+	--enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.11-rpms" \
+	--enable="rhel-7-server-ansible-2.6-rpms"' -i inventory.pre all
 	
 
 Install prereq packages
 
 	ansible -m shell -a "yum -y install wget git net-tools bind-utils yum-utils \
 	iptables-services bridge-utils bash-completion kexec-tools sos psacct" \
-	-i /etc/ansible/inventory/inventory-preinstall all
-
-	ansible -m shell -a "yum -y update" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m command -a "reboot" -i /etc/ansible/inventory/inventory-preinstall all
+	-i inventory.pre all
+	
+	ansible -m shell -a "yum -y update" -i inventory.pre all
+	ansible -m command -a "reboot" -i inventory.pre all
 
 
 Install ansible
 
-	ansible -m shell -a "yum -y install openshift-ansible" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m command -a "reboot" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "yum -y install openshift-ansible" -i inventory.pre all
+	ansible -m command -a "reboot" -i inventory.pre all
 
 
 ### Installing Docker 
 
-	ansible -m shell -a "yum -y install docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "rpm -V docker-1.13.1" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "docker version" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "yum -y install docker-1.13.1" -i inventory.pre all
+	ansible -m shell -a "rpm -V docker-1.13.1" -i inventory.pre all
+	ansible -m shell -a "docker version" -i inventory.pre all
 
 
 ### Installing GlusterFS
 
-	ansible -m shell -a "yum -y install glusterfs-fuse" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms" -i /etc/ansible/inventory/inventory-preinstall all
-	ansible -m shell -a "yum -y update glusterfs-fuse" -i /etc/ansible/inventory/inventory-preinstall all
+	ansible -m shell -a "yum -y install glusterfs-fuse" -i inventory.pre all
+	ansible -m shell -a "subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms" -i inventory.pre all
+	ansible -m shell -a "yum -y update glusterfs-fuse" -i inventory.pre all
 
 
 ### Setting docker storage setup
