@@ -426,9 +426,9 @@ openshift_excluder : Install docker excluder - yum -----------------------------
 
 ### Cassandra
 
-If you have problems with cassandra pods in the namespace openshift-infra. 
+Verify if you have enought memory to run infra nodes. The recommend is to use 16GB RAM for each node. 
 
-You could delete the replication controllers and pvc
+First, delete the replication controllers and pvc
 ``` 
 oc delete rc -n openshift-infra hawkular-cassandra-1 
 oc delete rc -n openshift-infra hawkular-metrics
