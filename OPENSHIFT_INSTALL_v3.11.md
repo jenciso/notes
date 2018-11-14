@@ -2,7 +2,7 @@
 
 ### Creating templates in kvm
 
-Create a VM with RedHat 7.6 with 2 HD's
+Create a template with RedHat 7.6 and 2 HD's
 
 ```
 - 50GB to operating system (/dev/xvda)
