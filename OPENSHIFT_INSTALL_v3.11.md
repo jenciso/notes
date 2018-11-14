@@ -2,7 +2,7 @@
 
 ### Creating templates in kvm
 
-Create a template with RedHat 7.6 and 2 HD's
+Create a RedHat 7.6 template using 2 disks 
 
 ```
 - 50GB to operating system (/dev/xvda)
@@ -53,7 +53,9 @@ use vir-clone to create each server from template `openshift`
 E.g.:  ocpvm090lb111 -> load balancer
 
 ``` 
-virt-clone --connect qemu:///system --original-xml /var/lib/libvirt/images/openshift.xml --name ocpvm090lb111 --file /var/lib/libvirt/images/ocpvm090lb111.qcow2 --file /var/lib/libvirt/images/ocpvm090lb111-1.qcow2
+virt-clone --connect qemu:///system --original-xml /var/lib/libvirt/images/openshift.xml \
+--name ocpvm090lb111 --file /var/lib/libvirt/images/ocpvm090lb111.qcow2 \
+--file /var/lib/libvirt/images/ocpvm090lb111-1.qcow2
 ``` 
 
 ## Prepare bastion server
