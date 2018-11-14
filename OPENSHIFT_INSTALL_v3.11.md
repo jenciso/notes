@@ -145,7 +145,7 @@ Using `ansible -m shell`
 	cd ~/
 	ansible -m shell -a "hostname" -i inventory.pre all
 
-	ansible -m shell -a "subscription-manager register --username=nsconsultores.juan --password=xxxx" -i inventory.pre all
+	ansible -m shell -a "subscription-manager register --username=<my_user> --password=<my_pass>" -i inventory.pre all
 	ansible -m shell -a 'subscription-manager refresh' -i inventory.pre all
 	ansible -m shell -a "subscription-manager attach --pool=8a85f99b65c8c8f10166e56054bc3e47" -i inventory.pre all
 	ansible -m shell -a 'subscription-manager repos --disable="*"' -i inventory.pre all
