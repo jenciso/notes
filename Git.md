@@ -1,3 +1,21 @@
+## Git flow resume
+
+Create the repo:
+
+    git checkout -b migracao_repos
+
+if it exist, then:
+
+    git checkout migracao_repos
+
+To do all the changes:
+
+    git merge migracao_repos
+    git tag -a 1.6.2-RELEASE -m "Release - migração config-repo-prd para o TFS"
+    git show 1.6.2-RELEASE
+    git push origin 1.6.2-RELEASE
+
+
 ## Git Finding diff between current and last version?
 
 ```
