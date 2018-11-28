@@ -121,3 +121,13 @@ GIT_PROMPT_ONLY_IN_REPO=1
 source ~/.bash-git-prompt/gitprompt.sh
 ```
 
+## Git - howto save temporal changes in your branches
+
+To save:
+```
+git stash
+```
+To recover:
+```
+git stash pop
+``` 
