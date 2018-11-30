@@ -197,3 +197,8 @@ jenciso@dellPE:~$ curl -s -k https://apik8s-dev.iplanet.work/version -H 'Authori
 * Connection #0 to host apik8s-dev.iplanet.work left intact
 }jenciso@dellPE:~$  
 ```
+
+## Patch deployment
+
+	kubectl patch deployment web -p \
+  	"{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
