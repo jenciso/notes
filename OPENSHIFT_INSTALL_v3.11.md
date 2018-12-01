@@ -278,8 +278,9 @@ Convert to Unix type
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11" -i inventory.pre nodes
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-node:v3.11.16" -i inventory.pre nodes
 	ansible -m shell -a "docker pull registry.redhat.io/openshift3/ose-pod:v3.11.16" -i inventory.pre nodes
-	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-volmanager-rhel7" -i inventory.pre nodes
-	ansible -m shell -a "docker pull registry.access.redhat.com/rhgs3/rhgs-gluster-block-prov-rhel7" -i inventory.pre nodes
+	ansible -m shell -a "docker pull registry.redhat.io/rhgs3/rhgs-volmanager-rhel7" -i inventory.pre nodes
+	ansible -m shell -a "docker pull registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7" -i inventory.pre nodes
+	
 
 ### Make a inventory.redhat 
 
