@@ -468,3 +468,21 @@ Download images
 
 Source: [Add nodes](https://docs.openshift.com/container-platform/3.11/install_config/adding_hosts_to_existing_cluster.html)
 
+## TIPS
+
+Running pods like a root 
+
+Create a service account and give the scc permissions:
+
+	oc create sa backend
+	oc adm policy add-scc-to-user anyuid system:serviceaccount:site-institucional:backend
+	
+Then, modify the yaml deployment, 
+
+```
+  restartPolicy: Always
+  serviceAccount: backend
+  volumes:
+```
+  
+ 
