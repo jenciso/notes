@@ -2,7 +2,7 @@
 
 1. Install Helm
 
-	https://github.com/kubernetes/helm
+https://github.com/kubernetes/helm
 
 2. Setup a clusterrolebinding for helm
 
@@ -30,8 +30,9 @@ EOF
 ```
 3. Create tiller account
 
-	helm init --service-account tiller
-
+```
+helm init --service-account tiller
+```
 
 4. Install it
 
