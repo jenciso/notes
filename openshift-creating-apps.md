@@ -57,6 +57,7 @@ oc secrets link builder gitlab-sshauth-front
 oc annotate secret/gitlab-sshauth-front 'build.openshift.io/source-secret-match-uri-1=git@git.intelbras.com.br:IAF_TIC.CamadaWeb/intelbras-site-frontend.git'
 oc new-app RAZZLE_SERVER_PORT=80 RAZZLE_DEFAULT_LANG=pt RAZZLE_EXPRESS_CACHE_TTL=60 RAZZLE_PUBLIC_DIR=build/public NODE_ENV=production RAZZLE_API_URL=http://drupal/ RAZZLE_API_URL_PUBLIC=http://drupal-site-intel
 bras.apps.intelbras.com.br/ -l app=frontend --name=node --source-secret=gitlab-sshauth-front git@git.intelbras.com.br:IAF_TIC.CamadaWeb/intelbras-site-frontend.git
+```
 
 expose
 ```
