@@ -3,6 +3,16 @@ https://github.com/coreos/etcd/blob/master/Documentation/dev-guide/interacting_v
 
 ## Basic commands
 
+Insert key
+```
+ETCDCTL_API=3 etcdctl put mykey "this is awesome"
+ETCDCTL_API=3 etcdctl get mykey
+```
+Performance test
+```
+ETCDCTL_API=3 etcdctl check perf
+```
+
 * status
 version 2:
 ```sh
