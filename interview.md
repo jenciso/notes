@@ -1,0 +1,2 @@
+I'm an IT infrastructure arquitect with solid background to create infrastructure solutions. My experience working in diverse industries as financial and internet companies give me the opportunity to know more about the Internet technologies and to reach one of my career goals, to be one technical reference. At the moment, I'm looking for to work in a Global company, to join in companies with an open culture, being part of a team having the desire to learn more about the new technologies and share my experiences with my co-workers.
+
