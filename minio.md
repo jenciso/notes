@@ -107,5 +107,36 @@ helm update
 helm upgrade --force storage-realiza stable/minio 
 ``` 
 
+## Provision minio storages using helm
+
+* Create dynamic `MINIO_SECRET_KEY` and `MINIO_ACCESS_KEY`
+
+Using random pass generator: 
+```
+date | md5sum | head -c 16 | awk '{ print toupper($0) }'
+export MINIO_ACCESS_KEY=$(date | md5sum | head -c 16 | awk '{ print toupper($0) }')
+export MINIO_SECRET_KEY=$(date | md5sum | head -c 16 | awk '{ print toupper($0) }')
+```
+ 
+* Create a simple minio
+
+```
+	helm install --set accessKey=$MINIO_ACCESS_KEY,secretKey=$MINIO_SECRET_KEY stable/minio
+```
+
+* Create a custom minio service
+
+```
+	helm install --set serviceType=NodePort --name storage-test --namespace=default \
+	--set accessKey=$MINIO_ACCESS_KEY,secretKey=$MINIO_SECRET_KEY \
+	stable/minio
+```
+
+* Delete that test
+
+```
+	helm del --purge storage-test
+```
+
 ## Kubernetes
 https://docs.minio.io/docs/deploy-minio-on-kubernetes
