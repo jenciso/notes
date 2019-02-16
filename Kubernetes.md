@@ -1,3 +1,15 @@
+## Forcing rolling restart
+
+```sh
+kubectl set env --all deployment --env="LAST_MANUAL_RESTART=$(date +%s)" --namespace=...
+kubectl set env --all daemonset --env="LAST_MANUAL_RESTART=$(date +%s)" --namespace=...
+```
+Ex
+```sh
+kubectl set env deployment nginx-demo --env="LAST_MANUAL_RESTART=$(date +%s)" --namespace=default
+```
+https://github.com/kubernetes/kubernetes/issues/13488
+
 ## Installing Prometheus Operator
 
 1. Install Helm
