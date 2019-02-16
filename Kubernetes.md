@@ -10,6 +10,12 @@ kubectl set env deployment nginx-demo --env="LAST_MANUAL_RESTART=$(date +%s)" --
 ```
 https://github.com/kubernetes/kubernetes/issues/13488
 
+## Rolling update
+
+```sh
+kubectl rolling-update myapp --image=us.gcr.io/project-107012/myapp:5c3dda6b --image-pull-policy Always
+``` 
+
 ## Installing Prometheus Operator
 
 1. Install Helm
