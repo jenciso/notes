@@ -1,3 +1,7 @@
+## bash arrays
+
+https://www.linuxjournal.com/content/bash-arrays
+
 ## Regexp 
 
 https://regexr.com/
