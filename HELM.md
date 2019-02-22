@@ -7,3 +7,10 @@ helm install --name cache-canais --namespace=canais --set password=yY9zvhYf7C --
 ## Using Helm secret
 
 https://developer.epages.com/blog/tech-stories/kubernetes-deployments-with-helm-secrets/
+
+
+## Override FullName
+
+```
+helm install --name demoapp mychart-0.1.0.tgz --set service.type=NodePort --set fullnameOverride=demoapp
+```
