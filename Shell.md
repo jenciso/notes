@@ -1,3 +1,12 @@
+## Force ntp client to update 
+
+Old SO
+
+```sh
+service stop ntpd
+ntpd -gq
+service start ntpd
+```
 ## Execute commands without save in history file
 
 ```
