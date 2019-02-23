@@ -1,3 +1,18 @@
+## Create a ISO on Local Storage
+
+Checked in xenserver 6.5. 
+
+Create a directory : 
+```sh
+mkdir -p /var/opt/xen/ISO/nfs_sr  
+```
+Create an iso from the CLI :
+```sh 
+xe sr-create name-label=nfs-sr type=iso device-config:location=/var/opt/xen/ISO/nfs_sr device-config:legacy_mode=true content-type=iso
+```  
+You can see the SR in the xencenter but there will be space constraints as this will take the dom0 space/root file space. 
+
+
 ## Force lower memory limits in XenServer VMs
 
 Step 1: check uuid
