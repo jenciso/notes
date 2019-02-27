@@ -1,3 +1,9 @@
+## HELM rollback
+
+```
+helm rollback canais-cache 1  --recreate-pods
+```
+
 ## Create REDIS service via HELM
 
 ```
