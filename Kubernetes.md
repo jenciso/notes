@@ -1,3 +1,11 @@
+## Delete PV and PVC force
+
+The idea is delete the contect in this label ` - kubernetes.io/pv-protection`
+```
+kubectl patch pvc db-pv-claim -p '{"metadata":{"finalizers":null}}'
+kubectl patch pod db-74755f6698-8td72 -p '{"metadata":{"finalizers":null}}'
+```
+
 ## Forcing rolling restart
 
 ```sh
