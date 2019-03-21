@@ -1,3 +1,8 @@
+## Example kubelet file
+	
+	http://blog.michali.net/wp-content/uploads/2018/07/config.yaml_.txt
+
+
 ## Delete PV and PVC force
 
 The idea is delete the contect in this label ` - kubernetes.io/pv-protection`
