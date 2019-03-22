@@ -1,3 +1,7 @@
+## inotify script
+
+https://raw.githubusercontent.com/yousong/gists/master/shell/inotify_watchers.sh
+
 ## Force ntp client to update 
 
 Old SO
