@@ -532,3 +532,12 @@ semanage permissive -a hypervvssd_t
 reboot
 ```
 https://social.technet.microsoft.com/Forums/windows/en-US/cfe15e32-bfbc-47e0-8d2b-382a1293b9aa/vss-issues-with-centos-66-x64?forum=linuxintegrationservices
+
+## Systemd
+
+List all services
+
+```
+systemctl list-units --full --all
+```
+
