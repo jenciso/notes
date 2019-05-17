@@ -189,3 +189,9 @@ EOF
 ```
 find . -name '*' -type f -exec sed -i 's/elastic_version/elk_version/' {} \;
 ```
+
+## Check Network traffic 
+
+```
+iftop -i eth0:34 -P -nN
+```
