@@ -114,10 +114,12 @@ cd ~
 git clone https://github.com/jenciso/bash-git-prompt.git .bash-git-prompt --depth=1
 ```
 
-Step 2: Add to the ~/.bashrc
+Step 2: Add to following lines into `~/.bashrc`
 
 ```sh
-GIT_PROMPT_ONLY_IN_REPO=1
+## Bash-git
+GIT_PROMPT_ONLY_IN_REPO=0
+GIT_PROMPT_THEME=Single_line_Minimalist
 source ~/.bash-git-prompt/gitprompt.sh
 ```
 
