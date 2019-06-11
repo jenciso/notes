@@ -19,7 +19,6 @@ Enable mouse: Edit `~/.tmux.conf` and put this line
 
 ```
 set -g mouse on
-tmux source-file ~/.tmux.conf
 ```
 
 ## Kill terminal sleep or freezed
