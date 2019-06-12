@@ -120,7 +120,14 @@ More info, [here](https://lebkowski.name/docker-volumes/)
 
 ### Docker privileges 
 
+```shell
+$ sudo usermod -a -G docker $USER
+$ reboot
 ```
-sudo usermod -a -G docker $USER
-reboot
+
+
+### Docker order by size
+
+```shell 
+$ docker images --format '{{.Size}}\t{{.Repository}}\t{{.Tag}}\t{{.ID}}' | sed 's/ //' | sort -h -r | column -t
 ```
