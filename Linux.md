@@ -541,3 +541,12 @@ List all services
 systemctl list-units --full --all
 ```
 
+## Sed and Perl to print matched expression
+
+```
+sed -n 's/.* \([0-9]*%\),.*/Battery: \1/p'
+```
+
+```
+perl -ne '/(\d+%)/ && print "Battery: $1\n";'
+``` 
