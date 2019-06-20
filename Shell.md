@@ -195,3 +195,13 @@ find . -name '*' -type f -exec sed -i 's/elastic_version/elk_version/' {} \;
 ```
 iftop -i eth0:34 -P -nN
 ```
+
+## why-doesnt-this-show-the-hidden-files-folders
+
+```
+du -sch .[!.]* * |sort -h
+```
+
+```
+sudo apt-get install ncdu
+```
