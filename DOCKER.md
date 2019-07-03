@@ -27,6 +27,7 @@ docker rm $(docker ps -a -q)
 ```
 docker rmi $(docker images -q -f "dangling=true")
 docker images | grep ^nexus | awk '{print $1":"$2}' | xargs docker rmi
+docker ps -a | grep "pattern" | awk '{print $3}' | xargs docker rmi
 ```
 
 ## Installing docker-compose on Centos 7
