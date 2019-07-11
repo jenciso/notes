@@ -7,7 +7,7 @@ If you wanna record your fancy tmux session with all windows and splits recorded
     
 detach (prefix+d)
 
-    run asciinema -c "tmux attach -t session-name" rec 
+    asciinema rec -c "tmux attach -t session-name"
 
 when you're finished, just detach the session again
 
