@@ -74,4 +74,8 @@ Another method
 Get-ChildItem -Path “HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\HotFix”
 ```
 
+## Get all member of a AD group
 
+```
+dsget group "CN=Kubernetes-cluster-admin,OU=GRUPOS,OU=example,OU=com" -members | dsget user -samid -email -upn
+```

@@ -55,7 +55,7 @@ openshift_master_debug_level="{{ master_debug_level | default(debug_level, true)
 ###########################################################################
 ### OpenShift Authentication Vars
 ###########################################################################
-openshift_master_identity_providers=[{'name': 'AD', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['sAMAccountName'], 'email': ['email'], 'name': ['givenName'], 'preferredUsername': ['sAMAccountname']}, 'bindDN': 'CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicred,DC=com,DC=br', 'bindPassword': 'eaeLaHKU$19MLy', 'insecure': 'true', 'url': 'ldap://ldap.e-unicred.com.br/DC=e-unicred,DC=com,DC=br?sAMAccountName'}]
+openshift_master_identity_providers=[{'name': 'AD', 'challenge': 'true', 'login': 'true', 'kind': 'LDAPPasswordIdentityProvider', 'attributes': {'id': ['sAMAccountName'], 'email': ['email'], 'name': ['givenName'], 'preferredUsername': ['sAMAccountname']}, 'bindDN': 'CN=svc.infra,OU=Servicos,OU=TS,DC=example,DC=com,DC=br', 'bindPassword': 'eaeLaHKUy', 'insecure': 'true', 'url': 'ldap://ldap.example.com.br/DC=example,DC=com,DC=br?sAMAccountName'}]
 
 
 ###########################################################################

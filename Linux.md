@@ -349,11 +349,21 @@ Step 4: Reboot
 
 
 ## Example for Ldap Search
+
+Search by username
+
 ```
 ldapsearch -h e-unicred.com.br -x -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicred,DC=com,DC=br" -W -b "dc=e-unicred,dc=com,dc=br" "(sAMAccountName=juan.enciso)"
 ```
 
+Search Groups
+
+```
+ldapsearch -h e-unicred.com.br -x -LLL -D "CN=svc.infra,OU=Servicos,OU=TS,DC=e-unicred,DC=com,DC=br" -b "OU=GRUPOS,OU=TS,dc=e-unicred,dc=com,dc=br" "(CN=kubernetes-cluster-admin)" -w '*****' -o ldif-wrap=no -s sub "cn=*" member | grep -b ^dn | grep member | sed -e 's/member: //' > /tmp/users.txt
+```
+
 ## Create loop storage
+
 ```
 #dd if=/dev/zero of=~/file.img bs=1MiB count=10
 #losetup --find --show ~/file.img
