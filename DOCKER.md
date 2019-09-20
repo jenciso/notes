@@ -132,3 +132,10 @@ $ reboot
 ```shell 
 $ docker images --format '{{.Size}}\t{{.Repository}}\t{{.Tag}}\t{{.ID}}' | sed 's/ //' | sort -h -r | column -t
 ```
+
+### Docker save and load
+
+```
+docker save gitlab-ce:latest > gitlab-ce-latest.tar
+docker load -i gitlab-ce-latest.tar
+```
