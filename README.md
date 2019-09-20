@@ -1,2 +1,2 @@
 # Notes
-This repo contains multiples files with many tips
+This repo contains many files with some tips to save time in google search
