@@ -1,3 +1,13 @@
+## Set
+To write the command and the result
+```
+set -x  
+```
+To stop the script when one command gives error code
+```
+set -e
+```
+
 ## inotify script
 
 https://raw.githubusercontent.com/yousong/gists/master/shell/inotify_watchers.sh
