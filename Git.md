@@ -133,3 +133,14 @@ To recover:
 ```
 git stash pop
 ``` 
+
+
+## Git - When you want to remove files from git commit 
+
+```
+git reset --soft HEAD^ 
+```
+or
+``` 
+git reset --soft HEAD~1
+``` 
