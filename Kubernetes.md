@@ -1,6 +1,21 @@
+## Kubectl client 
+
+```
+USER=my_username
+PASS=my_password
+SITE=tst
+
+kubectl config set-credentials $USER --username=$USER --password=$PASS
+kubectl config set-cluster $SITE --server=https://apik8s-$SITE.e-unicred.com.br --insecure-skip-tls-verify
+kubectl config set-context k8s-$SITE --cluster=$SITE --user=$USER
+
+kubectl config use-context k8s-$SITE
+kubectl cluster-info
+```
+
 ## Example kubelet file
 	
-	http://blog.michali.net/wp-content/uploads/2018/07/config.yaml_.txt
+* http://blog.michali.net/wp-content/uploads/2018/07/config.yaml_.txt
 
 
 ## Delete PV and PVC force
