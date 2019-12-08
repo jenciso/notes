@@ -1,3 +1,12 @@
+## Avoiding ARP Flux
+
+```
+sysctl -w net.ipv4.conf.all.arp_announce=1
+sysctl -w net.ipv4.conf.all.arp_ignore=2
+```
+Source: https://netbeez.net/blog/avoiding-arp-flux-in-multi-interface-linux-hosts/
+
+
 ## bash arrays
 
 https://www.linuxjournal.com/content/bash-arrays
