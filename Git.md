@@ -175,3 +175,25 @@ git pull --all
 ```
 
 Source: https://stackoverflow.com/questions/10312521/how-to-fetch-all-git-branches
+
+## Example alias gitconfig
+
+``` 
+[alias]
+  k = !gitk --all &
+  dismiss = reset HEAD --hard
+  rollback = reset --soft HEAD~1
+  unstage = reset HEAD --
+  undo = checkout --
+  redo = commit --amend --no-edit
+  sane = remote prune origin
+  send = push origin $(git rev-parse --abbrev-ref HEAD)
+  lg = log --all --graph --decorate --oneline --abbrev-commit
+  st = status -sb
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v  
+  co = checkout
+  cm = commit -m
+  acm = !git add . && git commit -m 
+  ```
