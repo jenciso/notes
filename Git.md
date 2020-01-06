@@ -1,3 +1,24 @@
+## WRONG BRANCH NAME?
+
+```
+git branch -m wrong correct         
+# Rename branch locally   
+git push origin :wrong                  
+# Delete the wrong branch   
+git push --set-upstream origin correct   
+# Push the new branch and set local branch to track the correct remote
+```
+
+## WHAT TO DO IF I FORGOT TO CHANGE BRANCH
+
+```
+git branch correctbranch
+git reset --hard HEAD~1 
+# Go back to previous commit
+# (but remove all uncommitted work)
+git checkout correctbranch
+```
+
 ## Git flow resume
 
 Create the repo:
