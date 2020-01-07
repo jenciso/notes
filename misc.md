@@ -24,3 +24,7 @@ sudo apt-get install peek
 ## Install theme
 
     cd /usr/share/themes/ && git clone https://github.com/jenciso/Numix.git
+
+## Fonts for tmux
+
+    sudo apt-get install fonts-powerline
