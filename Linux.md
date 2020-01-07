@@ -458,6 +458,11 @@ root@TEC1971:~#
 
 ## visudo NOPASSWD
 
+setup your user:
+```
+echo "$(id -nu) ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$(id -nu)
+```
+
 For a single user :
 ```yaml
 superuser ALL=(ALL) NOPASSWD:ALL
