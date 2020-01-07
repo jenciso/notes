@@ -1,3 +1,29 @@
+## KVM INSTALL 
+
+* Check
+
+```
+egrep -c '(vmx|svm)' /proc/cpuinfo
+sudo apt install cpu-checker
+sudo kvm-ok
+``` 
+
+* Install
+
+```
+sudo apt update
+sudo apt install qemu qemu-kvm libvirt-bin  bridge-utils  virt-manager
+``` 
+
+* Start & enable libvirtd service
+
+```
+sudo service libvirtd start
+sudo update-rc.d libvirtd enable
+service libvirtd status
+```
+
+
 ## Network setup
 
 Prereq
