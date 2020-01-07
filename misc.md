@@ -1,3 +1,10 @@
+## Install Gnome Theme 
+
+    sudo apt-get install dconf-cli uuid-runtime
+    bash -c  "$(wget -qO- https://git.io/vQgMr)"
+    
+Select option 58
+
 ## Installing GIF animated recording software
 
 ```
