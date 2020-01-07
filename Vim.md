@@ -17,5 +17,4 @@ Edit .vimrc
 ```
 colorscheme pablo
 syntax on
-
 ```
