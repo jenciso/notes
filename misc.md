@@ -5,6 +5,8 @@
     
 Select option 58
 
+Source https://github.com/Mayccoll/Gogh
+
 ## Installing GIF animated recording software
 
 ```
