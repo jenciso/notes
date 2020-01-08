@@ -1,7 +1,7 @@
 ## Install Gnome Theme 
 
-    sudo apt-get install dconf-cli uuid-runtime
-    bash -c  "$(wget -qO- https://git.io/vQgMr)"
+	sudo apt-get install dconf-cli uuid-runtime
+	bash -c  "$(wget -qO- https://git.io/vQgMr)"
 
 Select option 58
 
@@ -17,9 +17,9 @@ sudo apt-get install peek
 
 ## Install Icon theme
 
-    sudo add-apt-repository ppa:papirus/papirus
-    sudo apt-get update
-    sudo apt-get install papirus-icon-theme
+	sudo add-apt-repository ppa:papirus/papirus
+	sudo apt-get update
+	sudo apt-get install papirus-icon-theme
 
 Source https://snwh.org/paper/download
 
@@ -34,8 +34,17 @@ Source https://snwh.org/paper/download
 
 ## Install theme
 
-    cd /usr/share/themes/ && git clone https://github.com/jenciso/Numix.git
+	cd /usr/share/themes/ && git clone https://github.com/jenciso/Numix.git
 
 ## Fonts for tmux
 
-    sudo apt-get install fonts-powerline
+	sudo apt-get install fonts-powerline
+
+## cat highlight
+
+
+	sudo apt install python-pygments
+	alias ccat='pygmentize -g'
+
+	sudo apt-get install  highlight
+	alias cats='highlight -O ansi --force'
