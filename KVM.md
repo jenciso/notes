@@ -89,6 +89,19 @@ virsh pool-destroy $VM
 rm -ri $D/$VM
 ```
 
+### Windows 2012 and Timezone
+
+```
+  <clock offset='localtime'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+``` 
+
+https://stackoverflow.com/questions/20286207/windows-time-drifting-with-qemu-kvm
+
+
 Sources: 
 * https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/
 * https://legalimpurity.com/blog/kvm-on-centos-7-minimal-headless-server/
