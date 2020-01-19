@@ -48,3 +48,11 @@ Source https://snwh.org/paper/download
 
 	sudo apt-get install  highlight
 	alias cats='highlight -O ansi --force'
+
+## termtosvg
+
+```
+sudo apt install python3-pip
+pip3 install termtosvg
+
+```
