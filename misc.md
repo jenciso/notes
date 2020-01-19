@@ -51,8 +51,19 @@ Source https://snwh.org/paper/download
 
 ## termtosvg
 
+Install 
 ```
 sudo apt install python3-pip
 pip3 install termtosvg
+```
 
+Using a template like gruvbox
+```
+mkdir ~/templates
+wget https://raw.githubusercontent.com/nbedos/termtosvg/develop/termtosvg/data/templates/window_frame_js.svg -O ~/templates/window_frame_js.svg
+sed -i "s/#1c1c1c;/#282828;/g" ~/templates/window_frame_js.svg
+
+wget https://raw.githubusercontent.com/nbedos/termtosvg/develop/termtosvg/data/templates/window_frame_powershell.svg -O ~/templates/window_frame_powershell.svg
+
+.background {fill: #282828;}
 ```
