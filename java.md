@@ -37,6 +37,12 @@ Add the IP address in the exception:
 jcontrol
 ```
 
+To use:
+```
+javaws '/home/jenciso/Downloads/viewer.jnlp(10.64.8.155@0@1580158924760)'
+``` 
+
+
 References:
 
 https://antoniocampos.net/2018/01/12/java-erro-ao-utilizar-md5withrsa/
