@@ -8,21 +8,26 @@ sudo apt install cpu-checker
 sudo kvm-ok
 ``` 
 
-* Install
-
+* Install - Ubuntu
 ```
 sudo apt update
 sudo apt install qemu qemu-kvm libvirt-bin  bridge-utils  virt-manager
-``` 
-
-* Start & enable libvirtd service
-
-```
 sudo service libvirtd start
 sudo update-rc.d libvirtd enable
 service libvirtd status
+``` 
+
+* Install - Centos
 ```
-Source https://www.linuxtechi.com/install-configure-kvm-ubuntu-18-04-server/
+yum install kvm virt-manager libvirt virt-install qemu-kvm xauth dejavu-lgc-sans-fonts libguestfs-tools
+systemctl start libvirtd
+systemctl enable libvirtd
+```
+
+References:
+
+* https://www.linuxtechi.com/install-configure-kvm-ubuntu-18-04-server/
+* https://legalimpurity.com/blog/kvm-on-centos-7-minimal-headless-server/
 
 
 ## Network setup
@@ -41,11 +46,8 @@ modinfo bridge
 NIC configuration
 
 ```
-vi /etc/sysconfig/network-scripts/ifcfg-virbr0
-```
-
-```
-DEVICE="virbr0"
+$ cat /etc/sysconfig/network-scripts/ifcfg-br0
+DEVICE="br0"
 BOOTPROTO="static"
 IPADDR="192.168.12.10"
 NETMASK="255.255.255.0"
@@ -57,16 +59,13 @@ NM_CONTROLLED="no"
 ```
 
 ```
-vi /etc/sysconfig/network-scripts/ifcfg-enp3s0f0
-```
-
-```
+$ cat  /etc/sysconfig/network-scripts/ifcfg-enp3s0f0
 DEVICE=enp3s0f0
 TYPE=Ethernet
 BOOTPROTO=none
 ONBOOT=yes
 NM_CONTROLLED=no
-BRIDGE=virbr0
+BRIDGE=br0
 ```
 
 ```
@@ -99,8 +98,9 @@ rm -ri $D/$VM
   </clock>
 ``` 
 
-https://stackoverflow.com/questions/20286207/windows-time-drifting-with-qemu-kvm
+* https://stackoverflow.com/questions/20286207/windows-time-drifting-with-qemu-kvm
 
+-----
 
 Sources: 
 * https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/
