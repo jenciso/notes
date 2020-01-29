@@ -3,6 +3,7 @@
 ```
 slmgr.vbs /rearm
 ```
+For windows 2008, the command will be `slmgr.vbs -rearm` 
 
 ## Download one image using PWS
 
