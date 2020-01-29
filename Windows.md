@@ -1,3 +1,9 @@
+## Reset license windows 2012 R2
+
+```
+slmgr.vbs /rearm
+```
+
 ## Download one image using PWS
 
 ```
