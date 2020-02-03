@@ -100,6 +100,12 @@ rm -ri $D/$VM
 
 * https://stackoverflow.com/questions/20286207/windows-time-drifting-with-qemu-kvm
 
+## KVM thin provision
+
+References:
+
+http://blog.programster.org/kvm-creating-thinly-provisioned-guests
+
 -----
 
 Sources: 
