@@ -272,10 +272,9 @@ kubectl create -f cluster.yaml
 kubectl create -f filesystem.yaml
 ```
 
-Create a storageClass, filesystem storage and toolbox
-```
+Create two storageClass Block and File Storage. Also, deploy the toolbox
+```shell
 kubectl apply -f cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
-kubectl apply -f cluster/examples/kubernetes/ceph/filesystem.yaml
 kubectl apply -f cluster/examples/kubernetes/ceph/csi/cephfs/storageclass.yaml
 kubectl apply -f toolbox.yaml
 ```
