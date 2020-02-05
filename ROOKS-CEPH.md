@@ -269,8 +269,10 @@ spec:
 ``` 
 kubectl create -f operator.yaml
 kubectl create -f cluster.yaml
+kubectl create -f filesystem.yaml
 ```
-Create storageClass and more
+
+Create a storageClass, filesystem storage and toolbox
 ```
 kubectl apply -f cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
 kubectl apply -f cluster/examples/kubernetes/ceph/filesystem.yaml
