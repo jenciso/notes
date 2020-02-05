@@ -12,7 +12,7 @@ kubectl create -f cluster-test.yaml
 
 Complete:
 
-```
+```shell
 git clone --single-branch --branch release-1.2 https://github.com/rook/rook.git
 cd cluster/examples/kubernetes/ceph
 kubectl create -f common.yaml
@@ -23,7 +23,7 @@ operator.yaml
 
 > `cat operator.yaml | grep -v ^\# | egrep -v " {1,}#" | grep -v "^$"`
 
-```
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -142,7 +142,7 @@ cluster.yaml
 
 > `cat cluster.yaml | grep -v ^\# | egrep -v " {1,}#" | grep -v "^$"`
 
-```
+```yaml
 apiVersion: ceph.rook.io/v1
 kind: CephCluster
 metadata:
@@ -206,6 +206,64 @@ spec:
     osdMaintenanceTimeout: 30
     manageMachineDisruptionBudgets: false
     machineDisruptionBudgetNamespace: openshift-machine-api
+```
+
+filesystem.yaml
+
+> `cat filesystem.yaml | grep -v ^\# | egrep -v " {1,}#" | grep -v "^$" | pbcopy`
+
+```yaml
+apiVersion: ceph.rook.io/v1
+kind: CephFilesystem
+metadata:
+  name: myfs
+  namespace: rook-ceph
+spec:
+  metadataPool:
+    replicated:
+      size: 3
+  dataPools:
+    - failureDomain: host
+      replicated:
+        size: 3
+  preservePoolsOnDelete: true
+  metadataServer:
+    activeCount: 1
+    activeStandby: true
+    placement:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: node-role.kubernetes.io/infra
+              operator: In
+              values:
+              - "true"
+      tolerations:
+      - key: node-role.kubernetes.io/infra
+        operator: Exists
+      podAffinity:
+       podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - rook-ceph-mds
+            topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - rook-ceph-mds
+              topologyKey: topology.kubernetes.io/zone
+    annotations:
+    resources:
 ```
 
 ``` 
