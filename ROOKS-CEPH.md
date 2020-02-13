@@ -111,12 +111,13 @@ spec:
             - effect: NoSchedule
               key: node-role.kubernetes.io/infra
               operator: Exists
-        - name: CSI_PLUGIN_NODE_AFFINITY
-          value: "node-role.kubernetes.io/infra=true"
         - name: CSI_PLUGIN_TOLERATIONS
           value: |
             - effect: NoSchedule
               key: node-role.kubernetes.io/infra
+              operator: Exists
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
               operator: Exists
         - name: ROOK_UNREACHABLE_NODE_TOLERATION_SECONDS
           value: "5"
