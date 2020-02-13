@@ -14,6 +14,7 @@ Complete:
 
 ```shell
 git clone --single-branch --branch release-1.2 https://github.com/rook/rook.git
+cd rook
 cd cluster/examples/kubernetes/ceph
 kubectl create -f common.yaml
 ```
