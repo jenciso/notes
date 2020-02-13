@@ -295,4 +295,26 @@ Source:
 
 https://rook.io/docs/rook/v1.2/ceph-quickstart.html
 
+## Post Installation
 
+Usando toolbox
+
+```
+ceph osd pool autoscale-status
+ceph -s
+```
+
+```
+ceph mgr module enable pg_autoscaler
+ceph config set global osd_pool_default_pg_autoscale_mode on
+``` 
+
+``` 
+ceph osd pool set replicapool pg_autoscale_mode on
+ceph osd pool set myfs-data0 pg_autoscale_mode on
+ceph osd pool set myfs-metadata pg_autoscale_mode on
+```
+
+```
+ceph osd pool set replicapool pg_num 64
+```
