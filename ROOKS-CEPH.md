@@ -189,6 +189,7 @@ spec:
   annotations:
   resources:
   removeOSDsIfOutAndSafeToRemove: false
+  storage:
     useAllNodes: false
     useAllDevices: false
     config:
