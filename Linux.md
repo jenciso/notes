@@ -1,3 +1,16 @@
+## how to find DRAC IP address
+
+```
+racadm getniccfg
+```
+
+Before, you need to install omsa pacakges
+
+```
+wget -q -O - http://linux.dell.com/repo/hardware/dsu/bootstrap.cgi | bash
+yum install -y srvadmin-all
+/opt/dell/srvadmin/sbin/srvadmin-services.sh start
+```
 ## Avoiding ARP Flux
 
 ```
@@ -189,11 +202,19 @@ Step 3: Add entry in fstab
 ```
 
 ## Change default boot entry in CentOS
+
+```shell
+awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg
+grub2-set-default 3
 ```
-vim /etc/default/grub 
+> line number 1 but denoted as entry 0
+
+```shell
 grub2-mkconfig -o /boot/grub2/grub.cfg
+reboot
 ```
-http://ask.xmodulo.com/change-default-boot-kernel-centos.html
+
+https://www.thegeekdiary.com/centos-rhel-7-change-default-kernel-boot-with-old-kernel/
 
 ## Generate SHA2-512 password 
 
