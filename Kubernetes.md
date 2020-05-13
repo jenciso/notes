@@ -1,3 +1,11 @@
+## Kubernetes and iptables filtering
+
+Example to drop packet
+
+```
+iptables -I FORWARD -s 0/0 -d 10.64.100.166 -m state --state NEW,ESTABLISHED,RELATED -j DROP
+```
+
 ## Kubectl client 
 
 ```
