@@ -21,16 +21,23 @@ curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh -o
 bash install_nvm.sh
 source ~/.profile
 nvm ls-remote
-nvm install 8.11.1
+nvm install 12.17.0
+nvm use 12.17.0
 node -v
 nvm ls
+```
 
+Define the default
+```
+nvm alias default 12.17.0
+nvm use default
 ```
 
 Install express
 
 ```
-npm install express
+npm install -g express
 ```
 
-
+## Reference
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04-pt
