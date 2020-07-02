@@ -4,7 +4,7 @@ If you wanna record your fancy tmux session with all windows and splits recorded
 (setup your tmux session, create windows, splits, start processes in them)
 
     tmux new -s session-name
-    
+
 detach (prefix+d)
 
     asciinema rec -c "tmux attach -t session-name"
