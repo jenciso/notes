@@ -1,3 +1,9 @@
+## grep crontab lines 
+
+```
+crontab -l | grep -v ^# | grep "\s"
+```
+
 ## Set
 To write the command and the result
 ```
