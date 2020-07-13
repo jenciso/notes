@@ -329,6 +329,13 @@ or
 pstree
 ```
 
+## Supervisord
+
+```
+http://www.inanzzz.com/index.php/post/axh1/monitoring-a-php-process-example-with-supervisor
+https://advancedweb.hu/supervisor-with-docker-lessons-learned/
+```
+
 ## Kill subprocess in daemontools
 Add this line in your config
 
