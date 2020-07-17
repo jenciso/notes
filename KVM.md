@@ -15,6 +15,9 @@ sudo apt install qemu qemu-kvm libvirt-bin  bridge-utils  virt-manager
 sudo service libvirtd start
 sudo update-rc.d libvirtd enable
 service libvirtd status
+sudo usermod --append --groups kvm jenciso
+reboot
+virt-host-validate
 ``` 
 
 * Install - Centos
