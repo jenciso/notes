@@ -103,6 +103,7 @@ ps auxw | grep sbin/apache | awk '{print"-p " $2}' | xargs strace
 ```
 
 ## Single boot in Centos 7
+
 Step 1: On the boot, press any key to enter in grub2 menu
 
 Step 2: Press “e” key to edit arguments of kernel.
@@ -111,11 +112,13 @@ Step 3: Go to second last line (Starts with linux 16 or linuxefi) using up and d
 
 Step 4: Modify it to “rw init=/sysroot/bin/sh”. Once done, press “Ctrl+x”
 
-Step 5: Boot and enter the operative system
+Step 5: 
 
-Step 5: Boot and enter the operative system
 ```
 chroot /sysroot
+passwd
+touch /.autorelabel
+reboot
 ```
 
 ## Cron.daily doesn’t run in Centos 7

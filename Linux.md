@@ -1,3 +1,16 @@
+## RHEL to Centos 7
+
+```
+rpm --erase $( rpm -qa | egrep 'subscription-manager|rhn|redhat-support|redhat-access' )
+
+```
+## IP address
+
+```
+ip addr add 192.168.2.24/24 dev eth0
+ip route add default via 192.168.2.1
+```
+
 ## how to find DRAC IP address
 
 ```
@@ -541,7 +554,7 @@ iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 
 ## PORT-FORWARDING
 
-```sh
+```
 sudo iptables -I FORWARD -p tcp -i eth0 -d <private LAN server IP> --dport <inbound port> -j ACCEPT
 sudo iptables -t nat -A PREROUTING -p tcp -i eth0 -d <Firewall Public IP> --dport <Inbound Port> -j DNAT --to-destination <private LAN server IP>:<Port where service runs>
 ```
@@ -601,4 +614,4 @@ sed -n 's/.* \([0-9]*%\),.*/Battery: \1/p'
 
 ```
 perl -ne '/(\d+%)/ && print "Battery: $1\n";'
-``` 
+```
