@@ -118,6 +118,7 @@ Step 5:
 chroot /sysroot
 passwd
 touch /.autorelabel
+exit
 reboot
 ```
 
