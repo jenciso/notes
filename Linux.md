@@ -1,3 +1,13 @@
+## Setup DNS via nmcli 
+
+```
+nmcli dev show
+nmcli con mod VIVOFIBRA-30FA ipv4.dns "1.1.1.1 1.0.0.1"
+nmcli con down VIVOFIBRA-30FA
+nmcli con up  VIVOFIBRA-30FA
+```
+https://serverfault.com/questions/810636/how-to-manage-dns-in-networkmanager-via-console-nmcli
+
 ## RHEL to Centos 7
 
 ```
