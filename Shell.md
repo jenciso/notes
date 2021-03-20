@@ -1,3 +1,10 @@
+## Save your terminal settings in a file
+
+```
+dconf dump /org/gnome/terminal/ > /tmp/terminal
+dconf load /org/gnome/terminal/ < /tmp/terminal
+```
+
 ## grep crontab lines 
 
 ```
