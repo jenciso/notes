@@ -1,3 +1,14 @@
+## kubernetes and PLEG
+
+* https://developers.redhat.com/blog/2019/11/13/pod-lifecycle-event-generator-understanding-the-pleg-is-not-healthy-issue-in-kubernetes/
+* https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/pod-lifecycle-event-generator.md
+* https://gist.github.com/superseb/af32314125aac8e0aa7546239db55f82 
+
+## Cggroup kubernetes
+
+https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/node-allocatable.md#recommended-cgroups-setup
+
+
 ## Kubernetes and iptables filtering
 
 Example to drop packet
@@ -60,7 +71,7 @@ https://github.com/kubernetes/helm
 
 2. Setup a clusterrolebinding for helm
 
-```
+```bash
 cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: ServiceAccount
@@ -82,6 +93,7 @@ name: tiller
 namespace: kube-system
 EOF
 ```
+
 3. Create tiller account
 
 ```
@@ -138,11 +150,13 @@ From local directory to container
 	kube describe nodes | grep -A 2 -e "^\\s*CPU Requests"
 
 ## Force delete pod 
+
 ```
 kubectl delete pod --grace-period=0 --force --namespace <NAMESPACE> <PODNAME>
 ```
 
 ### Delete pods with sleep
+
 ``` 
 kubectl get pods --all-namespaces -o wide | grep <node_name> | awk '{ system("kubectl delete pod "$2" -n "$1" ; sleep 30") }'
 ``` 
@@ -235,7 +249,7 @@ kubectl get pods --all-namespaces -o wide | grep CrashLoopBackOff | awk '{ syste
 
 ## Encode base 64 User:Pass for basic authentication via curl
 
-```
+```bash
 jenciso@dellPE:~$ echo -n juan.enciso:33d48n22312d | base64                                                                             
 anVhbi5lbmNpc286MzNkNDhuYzRkM2Q=
 jenciso@dellPE:~$ curl -s -k https://apik8s-dev.iplanet.work/version -H 'Authorization: Basic anVhbi5lbmNpc286MzNkNDhuYzRkM2Q='

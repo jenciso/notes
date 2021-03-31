@@ -1,3 +1,19 @@
+## Cgroups swap memory limits
+
+```
+Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+```
+
+* https://fabianlee.org/2020/01/18/docker-placing-limits-on-container-memory-using-cgroups/
+* https://stackoverflow.com/questions/48685667/what-does-docker-mean-when-it-says-memory-limited-without-swap
+
+## Capture logs from /dev/stderr in docker logs command
+
+```sh
+docker logs 2>&1 | grep hello
+docker logs 2>/dev/null | grep hello
+```
+
 ## Install docker and docker-compose - Ubuntu
 
 Install docker daemon
