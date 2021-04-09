@@ -128,14 +128,14 @@ git remote set-url origin git@github.com:jenciso/notes.git
 
 ## Git Bash Prompt
 
-Step 1: Download
+Step 1: Download the repo
 
 ```sh
 cd ~
 git clone https://github.com/jenciso/bash-git-prompt.git .bash-git-prompt --depth=1
 ```
 
-Step 2: Add to following lines into `~/.bashrc`
+Step 2: Add these lines in `~/.bashrc`
 
 ```sh
 ## Bash-git
@@ -143,6 +143,9 @@ GIT_PROMPT_ONLY_IN_REPO=0
 GIT_PROMPT_THEME=Single_line_Minimalist
 source ~/.bash-git-prompt/gitprompt.sh
 ```
+
+If you want to customize. Change here: `.bash-git-prompt/themes/Single_line_Minimalist.bgptheme`.
+
 
 ## Git - howto save temporal changes in your branches
 
