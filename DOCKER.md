@@ -1,3 +1,10 @@
+## Install Docker centos7 
+
+```
+curl -sL https://gist.githubusercontent.com/jenciso/1bfba6b9dca8bec6b8856374c8dfbf4f/raw/e629c5f23f36633c5d2887bb2959db04d5d6cfd4/install-docker-centos7.sh## Install Docker centos7  | bash - 
+
+```
+
 ## Cgroups swap memory limits
 
 ```
