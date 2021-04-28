@@ -211,7 +211,7 @@ kubectl get svc --all-namespaces -ao jsonpath='{range .items[*]}{@.metadata.name
 
 ## Get all images for each pod
 ```
-kubectl get pods -ao jsonpath='{range .items[*]}{@.metadata.name}{" "}{@.spec.containers[*].image}{"\n"}{end}
+kubectl get pods -A -o jsonpath='{range .items[*]}{@.metadata.name}{" "}{@.spec.containers[*].image}{"\n"}{end}
 ```
 
 ## Running busybox
