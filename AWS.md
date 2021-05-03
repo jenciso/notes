@@ -1,3 +1,23 @@
+## Describe EC2 instance using a tag 
+
+```
+aws ec2 describe-instances --filters "Name=tag:Name,Values=mail"
+aws ec2 describe-instances --filters "Name=tag-value,Values=mail"
+```
+
+
+## Start Instances based on tag
+
+```
+aws ec2 start-instances --instance-ids $(aws ec2 describe-instances --filters "Name=tag:Name,Values=bastion-aws" | jq -r .Reservations[].Instances[].InstanceId)
+```
+
+## Change template version 
+
+```
+aws ec2 modify-launch-template --launch-template-id "lt-025e4c13df8edace4" --default-version "4" --region "us-east-1"
+```
+
 ## Expandir disco
 
 Verify if the disk is xfs type 
