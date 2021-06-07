@@ -1,3 +1,41 @@
+## Netdata
+
+https://faun.pub/see-your-vm-instance-real-time-monitoring-graphs-and-metrics-89905cb3dee0 
+
+
+Install
+
+```
+bash <(curl -Ss https://my-netdata.io/kickstart.sh)
+```
+
+```
+    echo 1 >/sys/kernel/mm/ksm/run
+    echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs
+
+If you enable it, you will save 40-60% of netdata memory.
+
+ --- Check version.txt ---
+ --- Check apps.plugin ---
+ --- Copy uninstaller ---
+ --- Basic netdata instructions ---
+
+netdata by default listens on all IPs on port 19999,
+so you can access it with:
+
+  http://this.machine.ip:19999/
+
+To stop netdata run:
+
+  systemctl stop netdata
+
+To start netdata run:
+
+  systemctl start netdata
+
+Uninstall script copied to: /usr/libexec/netdata/netdata-uninstaller.sh
+```
+
 ## Setup DNS via nmcli 
 
 ```
